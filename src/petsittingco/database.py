@@ -21,5 +21,6 @@ class Job(db.Model):
     location = db.Column(db.String(256),nullable = False)
     pet_id = db.Column(db.Integer, nullable = False)
     sitter_id = db.Column(db.Integer, nullable = True)
+    owner_id = db.Column(db.Integer, nullable = False)
     accepted = db.Column(db.Boolean, nullable = False)
     details = db.String(db.String(1024))
