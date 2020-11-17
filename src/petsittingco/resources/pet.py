@@ -5,10 +5,10 @@ app_api = None
 
 def create_api(app):
     app_api = Api(app)
-    app_api.add_resource(PetInfoEndpoint,"/petinfoendpoint")
-    app_api.add_resource(PetCreationEndpoint,"/petcreationendpoint/<string:data>")
+    app_api.add_resource(PetInfo,"/petinfo")
+    app_api.add_resource(PetCreation,"/petcreation/<string:data>")
     
-class PetInfoEndpoint(Resource):
+class PetInfo(Resource):
     def get(self):
         return send_from_directory('test_data','petinfoendpoint.json')
     def post(self):
@@ -16,7 +16,7 @@ class PetInfoEndpoint(Resource):
 
 
 
-class PetCreationEndpoint(Resource):
+class PetCreation(Resource):
     def get(self,data):
         return {"Get":data}
     def post(self,data):

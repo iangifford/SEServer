@@ -1,3 +1,3 @@
 import context
-from application import
+from application import db
 db.create_all()

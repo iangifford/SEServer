@@ -5,9 +5,9 @@ app_api = None
 
 def create_api(app):
     app_api = Api(app)
-    app_api.add_resource(JobCreationEndpoint,"/jobcreationendpoint/<string:data>")
+    app_api.add_resource(JobCreation,"/jobcreation/<string:data>")
 
-class JobCreationEndpoint(Resource):
+class JobCreation(Resource):
     def get(self,data):
         return {"Get":data}
     def post(self,data):
