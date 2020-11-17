@@ -1,14 +1,16 @@
 from flask import Flask, send_from_directory, request
 from petinfo import create_api
-
-#init
+from database import db
+#init app
 app  = Flask(__name__, static_url_path='')
-#app serving function for db 
-def getApp():
-    return app
 #init api
 create_api(app)
 #init database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/test.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.app = app
+db.init_app(app)
+
 
 
 
