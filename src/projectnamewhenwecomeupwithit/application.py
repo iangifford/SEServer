@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory, request
-from resources import create_api
+from petinfo import create_api
 
 #init
 app  = Flask(__name__, static_url_path='')
