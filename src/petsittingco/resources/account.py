@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
-from database import db, Pet, Account, Job
+from petsittingco.database import db, Pet, Account, Job
 
 app_api = None
 

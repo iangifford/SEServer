@@ -1,6 +1,9 @@
 from flask import Flask, send_from_directory, request
-from resources.resource_map import apis
-from database import db
+
+from petsittingco.resources.resource_map import apis
+
+
+from petsittingco.database import db
 #init app
 app  = Flask(__name__, static_url_path='')
 #init api
