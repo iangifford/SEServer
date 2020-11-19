@@ -1,16 +1,16 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from dataclasses import dataclass
+#from dataclasses import dataclass
 db = SQLAlchemy()
 
-@dataclass
+#@dataclass
 class Account(db.Model):
-    id: int
+    """id: int
     type: int
     first_name: str
     last_name: str
     email: str
-    
+    """
     id = db.Column(db.Integer, primary_key = True, unique = True, nullable = False)
     type = db.Column(db.Integer, nullable = False)
     first_name = db.Column(db.String(32), nullable = False)
@@ -19,17 +19,18 @@ class Account(db.Model):
     password = db.Column(db.String(128), nullable = False)
 
 class Pet(db.Model):
-    id: int
+    """id: int
     owner_id: int
     name: str
     attributes: str
-
+"""
     id = db.Column(db.Integer, primary_key = True, unique = True, nullable = False)
     owner_id = db.Column(db.Integer, nullable = False)
     name = db.Column(db.String(32), nullable = False)
     attributes = db.Column(db.String(512), nullable = False)
 
 class Job(db.Model):
+    """
     id: int
     location: str
     pet_id: int
@@ -37,7 +38,7 @@ class Job(db.Model):
     owner_id: int
     accepted: bool
     details: str
-
+"""
     id = db.Column(db.Integer, primary_key = True, unique = True, nullable = False)
     location = db.Column(db.String(256),nullable = False)
     pet_id = db.Column(db.Integer, nullable = False)
