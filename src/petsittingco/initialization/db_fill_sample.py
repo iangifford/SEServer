@@ -1,6 +1,6 @@
 import context
-from application import db
-from database import Account, Pet, Job
+from src.petsittingco.application import db
+from src.petsittingco.database import Account, Pet, Job
 
 acc1 = Account(id = 1, type = 1, first_name = "John", last_name = "Smith", email = "JSmith@test.com", password = "password")
 pet1 = Pet(id = 1, owner_id = 1, name = "Fluffy", attributes = "{'Aggressive':'False'}")
