@@ -1,12 +1,11 @@
 from flask import Flask, send_from_directory, request
-from petsittingco.middleware import PrefixMiddleware
+
 from petsittingco.resources.resource_map import apis
 
 
 from petsittingco.database import db
 #init app
 app  = Flask(__name__, static_url_path='')
-app.wsgi_app = PrefixMiddleware(app.wsgi_app,prefix="/aiji")
 
 #init api
 #for create_api in apis:
