@@ -14,8 +14,6 @@ class PetInfo(Resource):
     def post(self):
         return {"Post":"data"}
 
-
-
 class PetCreation(Resource):
     def get(self,data):
         return {"Get":data}

@@ -7,13 +7,13 @@ from petsittingco.database import db
 #init app
 app  = Flask(__name__, static_url_path='')
 #init api
-for create_api in apis:
-    create_api(app)
+#for create_api in apis:
+    #create_api(app)
 #init database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.app = app
-db.init_app(app)
+#db.app = app
+#db.init_app(app)
 
 
 
