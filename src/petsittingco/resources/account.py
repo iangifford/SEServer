@@ -32,7 +32,7 @@ class AccountInfo(Resource):
     def get(self):
 
         args = self.parser.parse_args()
-        acc = Account.query.filter_by(id=int(args["id"])).first()
+        acc = Account.query.get(int(args["id"]))
         if not acc:
             return "Invalid Account id", 400
         return {"is_owner":acc.is_owner,"is_sitter":acc.is_sitter,"is_shelter":acc.is_shelter,"is_admin":acc.is_admin, "first_name":acc.first_name,"last_name":acc.last_name,"email":acc.email}, 200

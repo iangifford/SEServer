@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import UserMixin
 
 #from dataclasses import dataclass
 db = SQLAlchemy()
 
 #@dataclass
-class Account(db.Model):
+class Account(db.Model, UserMixin):
     __tablename__ = 'account'
     """id: int
     isOwner: bool
