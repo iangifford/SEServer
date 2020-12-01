@@ -46,6 +46,8 @@ class Pet(db.Model):
     owner_id = db.Column(db.Text, db.ForeignKey('account.id'))
     name = db.Column(db.Text, nullable = False)
     attributes = db.Column(db.Text, nullable = False)
+
+    #relationships
     jobs = db.relationship("Job",backref="pet",lazy = 'dynamic',foreign_keys = 'Job.pet_id')
 
 

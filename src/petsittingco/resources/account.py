@@ -50,7 +50,7 @@ class AccountCreate(Resource):
     parser.add_argument('email',type=str)
     parser.add_argument('password',type=str)
     
-    def get(self):
+    def post(self):
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()

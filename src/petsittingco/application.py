@@ -6,7 +6,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from flask_bootstrap import Bootstrap
-
+from werkzeug.routing import BaseConverter
 from src.petsittingco.resources.resource_map import apis
 from src.petsittingco.login import login_manager, login_blueprint, AdminModelView
 from src.petsittingco.database import db, Account
@@ -39,7 +39,11 @@ app.register_blueprint(login_blueprint)
 admin = Admin(app)
 admin.add_view(AdminModelView(Account, db.session))
 
-
+#custom routing (turns empty url into /)
+class WildcardConverter(BaseConverter):
+    regex = r'(|/.*?)'
+    weight = 200
+app.url_map.converters['wildcard'] = WildcardConverter
 
 
 @app.route('/home')
@@ -53,8 +57,11 @@ def home():
 def petsitterdashboard(path=None):
     return send_from_directory('static/petsitterdashboard',path)
 
-@app.route('/<path:path>')
+@app.route('/<wildcard:path>')
 @app.route('/', defaults={"path":''})
 def static_files(path=None):
+    print("path:",path)
+    if(path=="/" or path==""):
+        return send_from_directory("static","/index.html")
     return send_from_directory('static',path)
 
