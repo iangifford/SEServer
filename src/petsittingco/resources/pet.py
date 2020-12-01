@@ -1,6 +1,7 @@
 from flask import Flask, send_from_directory
 from flask_restful import Resource, Api
 
+
 app_api = None
 
 def create_api(app):
