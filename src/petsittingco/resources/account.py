@@ -59,6 +59,6 @@ class AccountCreate(Resource):
             db.session.commit()
             return {"id":created_id}, 201 
         except:
-            return {"msg":"Bad account parameters."}, 400
+            return {"msg":"Bad account parameters."}, 200
 
 
