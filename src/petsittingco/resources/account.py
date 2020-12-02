@@ -54,7 +54,7 @@ class AccountCreate(Resource):
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
-            acc = Account(id =created_id,is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = args["email"], password = args["password"])
+            acc = Account(id=str(created_id),is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = args["email"], password = args["password"])
             db.session.add(acc)
             db.session.commit()
             return {"id":created_id}, 201 
