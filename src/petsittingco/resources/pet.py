@@ -18,18 +18,14 @@ class PetInfo(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
-        parser.add_argument('auth',type=str)
-        #parser add argument for pet id
+        parser.add_argument('auth', type=str)
+        parser.add_argument('pet_id',type=str)
         args = parser.parse_args()
-        if(verify_auth(args["auth"],args["id"])):
-            #make sure the pet belongs to the owner
-
-            acc = Account.query.get(str(args["id"]))
-            pet = Pet.query.get(asdwadaw)
-            if pet.owner == args["id"]
-                return json ---> , 200
-            return send_from_directory('test_data','petinfoendpoint.json') #{"pet_name":pet.name, "attributes":pet.atributes}
-        return "bad pet", 404
+        if verifyauth('auth','id'):
+            # check that pet belongs to owner
+            pet = Pet.query.get( args["pet_id"] )
+            if pet.owner_id == args["id"]:
+                return { "name":pet.name, "attributes":pet.attributes }, 200
 
 
 class PetCreation(Resource):
