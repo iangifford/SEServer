@@ -28,7 +28,7 @@ class AccountModify(Resource):
 
 class AccountInfo(Resource):
 
-    def post(self):
+    def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
         args = parser.parse_args()
@@ -58,6 +58,6 @@ class AccountCreate(Resource):
             db.session.commit()
             return {"id":created_id}, 201 
         except:
-            return "Bad account parameters.", 400
+            return {"msg":"Bad account parameters."}, 400
 
 
