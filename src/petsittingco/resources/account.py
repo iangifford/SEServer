@@ -8,7 +8,7 @@ app_api = None
 
 def create_api(app):
     app_api = Api(app)
-    app_api.add_resource(AccountInfo,"/accountinfo/<string:data>")
+    app_api.add_resource(AccountInfo,"/accountinfo")
     app_api.add_resource(AccountModify,"/accountmodify/<string:data>")
     app_api.add_resource(Login,"/login/<string:data>")
     app_api.add_resource(AccountCreate,"/accountcreate")
@@ -27,17 +27,17 @@ class AccountModify(Resource):
         return {"Post":data}
 
 class AccountInfo(Resource):
-    parser = reqparse.RequestParser()
-    parser.add_argument('id',type=str)
-    def get(self):
 
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id',type=str)
         args = self.parser.parse_args()
         acc = Account.query.get(int(args["id"]))
         if not acc:
             return "Invalid Account id", 400
         return {"is_owner":acc.is_owner,"is_sitter":acc.is_sitter,"is_shelter":acc.is_shelter,"is_admin":acc.is_admin, "first_name":acc.first_name,"last_name":acc.last_name,"email":acc.email}, 200
     def post(self,):
-        return "No post access for this endpoint yet. Get only."
+        return "No post access for this endpoint yet. Get only.", 400
 
 class AccountCreate(Resource):
     parser = reqparse.RequestParser()

@@ -55,6 +55,9 @@ def home():
 @app.route('/petsitterdashboard/<path:path>')
 @login_required
 def petsitterdashboard(path=None):
+    if not current_user.is_sitter:
+        return "Page not found", 404
+    
     return send_from_directory('static/petsitterdashboard',path)
 
 @app.route('/<wildcard:path>')
