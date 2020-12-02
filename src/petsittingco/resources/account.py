@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api, reqparse
 import sqlite3
 from src.petsittingco.database import db, Pet, Account, Job
@@ -50,6 +50,7 @@ class AccountCreate(Resource):
     parser.add_argument('password',type=str)
     
     def post(self):
+        print(request.get_json())
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
