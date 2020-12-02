@@ -11,9 +11,6 @@ def create_api(app):
     #delete pet
     #modify pet
 
-    
-    
-
 class PetInfo(Resource):
     def get(self):
         parser = reqparse.RequestParser()
@@ -23,8 +20,10 @@ class PetInfo(Resource):
         args = parser.parse_args()
         if verify_auth('auth','id'):
             pet = Pet.query.get( args["pet_id"] )
-            if pet.owner_id == args["id"]:
-                return { "name":pet.name, "attributes":pet.attributes }, 200
+            if pet:
+                if pet.owner_id == args["id"]:
+                    return { "name":pet.name, "attributes":pet.attributes }, 200
+        return 404
 
 
 class PetCreation(Resource):
