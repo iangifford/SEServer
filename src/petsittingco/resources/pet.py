@@ -21,8 +21,7 @@ class PetInfo(Resource):
         parser.add_argument('auth', type=str)
         parser.add_argument('pet_id',type=str)
         args = parser.parse_args()
-        if verifyauth('auth','id'):
-            # check that pet belongs to owner
+        if verify_auth('auth','id'):
             pet = Pet.query.get( args["pet_id"] )
             if pet.owner_id == args["id"]:
                 return { "name":pet.name, "attributes":pet.attributes }, 200
