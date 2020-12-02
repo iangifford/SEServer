@@ -32,7 +32,7 @@ class AccountInfo(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
         args = parser.parse_args()
-        acc = Account.query.get(int(args["id"]))
+        acc = Account.query.get(str(args["id"]))
         if not acc:
             return {"msg":"Invalid Account id"}, 400
         return {"is_owner":acc.is_owner,"is_sitter":acc.is_sitter,"is_shelter":acc.is_shelter,"is_admin":acc.is_admin, "first_name":acc.first_name,"last_name":acc.last_name,"email":acc.email}, 200
