@@ -31,7 +31,7 @@ class AccountInfo(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
-        args = self.parser.parse_args()
+        args = parser.parse_args()
         acc = Account.query.get(int(args["id"]))
         if not acc:
             return "Invalid Account id", 400
