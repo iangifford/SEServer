@@ -12,7 +12,7 @@ app_api = None
 def create_api(app):
     app_api = Api(app)
     app_api.add_resource(AccountInfo, "/accountinfo")
-    app_api.add_resource(AccountModify, "/accountmodify/<string:data>")
+    app_api.add_resource(AccountModify, "/accountmodify")
     app_api.add_resource(Login, "/account/login")
     app_api.add_resource(AccountCreate, "/accountcreate")
 
