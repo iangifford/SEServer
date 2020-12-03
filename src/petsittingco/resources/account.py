@@ -67,7 +67,7 @@ class AccountInfo(Resource):
                     "first_name": acc.first_name, 
                     "last_name": acc.last_name, 
                     "email": acc.email,
-                    "phone number":acc.phone_number,
+                    "phone_number":acc.phone_number,
                     "address":acc.address
                     }, 200
         except Exception:
