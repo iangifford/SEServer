@@ -32,19 +32,21 @@ class PetCreation(Resource):
     def post(self,data):
         parser = reqparse.RequestParser() 
         parser.add_argument('id', type=str)
-        parser.add_argument('owner_id', type=str)
         parser.add_argument('name',type=str)
         parser.add_argument('attributes', type=str)
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
-            pet = Pet(id=str(created_id), owner_id=Account.query.get(args["id"]), name=args["name"],attributes = args["attributes"])
+            acc = Account.query.get( str(args["id"]) )
+            if not acc:
+                return {"msg":"No Account."}, 400
+            pet = Pet(id=str(created_id), owner=Account.query.get(args["id"]), name=args["name"],attributes = args["attributes"])
             db.session.add(pet)
             db.session.commit()
             return {"id":str(created_id)}, 201 
         except Exception  as e:
             print(e)
-            return {"msg":"Bad account parameters."}, 400
+            return {"msg":"Bad pet parameters."}, 400
 
 class PetList(Resource):
     def get(self):
@@ -54,9 +56,14 @@ class PetList(Resource):
         parser.add_argument('pet_id',type=str)
         args = parser.parse_args()
         if verify_auth('auth','id'):
-            pet = Pet.query.get( args["pet_id"] )
-            if pet:
-                return { "name":pet.name, "attributes":pet.attributes }, 200
+            acc = Account.query.get( str(args["id"]) )
+            if not acc:
+                return {"msg":"No Account."}, 400
+            pet_array = Account.query.get(args["id"]).pets
+            pet_dict = {}
+            for pet in pet_array:
+                pet_dict[pet.id] = {"name":pet.name,"attributes":pet.attributes}
+                return pet_dict, 200 
         return 404
 
 class PetModify(Resource):
