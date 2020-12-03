@@ -27,7 +27,8 @@ class Account(db.Model, UserMixin):
     last_name = db.Column(db.Text, nullable = False)
     email = db.Column(db.Text, unique=True,nullable = False)
     password = db.Column(db.Text, nullable = False)
-    
+    address = db.Column(db.Text)
+    phone_number = db.Column(db.Text)
     #relationships
     pets = db.relationship("Pet", backref='owner')
     owner_jobs = db.relationship("Job", backref='owner', lazy = 'dynamic', foreign_keys = 'Job.owner_id')
