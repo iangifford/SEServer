@@ -4,21 +4,34 @@ import sqlite3
 from src.petsittingco.database import db, Pet, Account, Job
 import json
 import uuid
+from src.petsittingco.resources.verify_auth import verify_auth,live_tokens
+from werkzeug.security import check_password_hash
 app_api = None
 
 def create_api(app):
     app_api = Api(app)
     app_api.add_resource(AccountInfo,"/accountinfo")
     app_api.add_resource(AccountModify,"/accountmodify/<string:data>")
-    app_api.add_resource(Login,"/login/<string:data>")
+    app_api.add_resource(Login,"/account/login")
     app_api.add_resource(AccountCreate,"/accountcreate")
 
 class Login(Resource):
-    def get(self,data):
-        return {"Get":data}
-    def post(self,data):
-        return {"Post":data}
+    def post(self):
 
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('email',type=str)
+        parser.add_argument('password',type=str)
+        args = parser.parse_args()
+        user = Account.query.filter_by(email=args["email"]).first()
+        if user:
+            if check_password_hash(user.password,args["password"]):
+                user_id = user.id
+                auth_token = str(uuid.uuid4())
+                live_tokens.append((auth_token,user_id))
+                return {"id":user_id,"auth":auth_token}, 200
+
+        return "Bad username or password", 401
 
 class AccountModify(Resource):
     def get(self,data):
