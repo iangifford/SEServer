@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api, reqparse
+from sqlalchemy import func
 import sqlite3
 from src.petsittingco.database import db, Pet, Account, Job
 import json
@@ -23,7 +24,7 @@ class Login(Resource):
         parser.add_argument('email',type=str)
         parser.add_argument('password',type=str)
         args = parser.parse_args()
-        user = Account.query.filter_by(email=args["email"]).first()
+        user = Account.query.filter_by(func.lower(Account.email) == func.lower(args["email"])).first()
         
         if user:
             if check_password_hash(user.password,args["password"]):
