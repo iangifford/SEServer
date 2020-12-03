@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api, reqparse
-from sqlalchemy import func
 import sqlite3
 from src.petsittingco.database import db, Pet, Account, Job
 import json
@@ -24,7 +23,7 @@ class Login(Resource):
         parser.add_argument('email',type=str)
         parser.add_argument('password',type=str)
         args = parser.parse_args()
-        user = Account.query.filter_by((func.lower(Account.email) == func.lower(args["email"]))).first()
+        user = Account.query.filter_by(str.lower(args["email"])).first()
         
         if user:
             if check_password_hash(user.password,args["password"]):
@@ -69,7 +68,7 @@ class AccountCreate(Resource):
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
-            acc = Account(id=str(created_id),is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = args["email"], password = generate_password_hash(args["password"],method='SHA512'))
+            acc = Account(id=str(created_id),is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = str.lower(args["email"]), password = generate_password_hash(args["password"],method='SHA512'))
             db.session.add(acc)
             db.session.commit()
             return {"success":True}, 201 
