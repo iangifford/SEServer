@@ -27,7 +27,7 @@ class Login(Resource):
             args = parser.parse_args()
             print(request.data)
             print("attempting to log in: ",str(args["email"]).lower())
-            user = Account.query.filter_by(str(args["email"]).lower()).first()
+            user = Account.query.filter_by(email=(str(args["email"]).lower())).first()
 
             if user:
                 if check_password_hash(user.password, args["password"]):
