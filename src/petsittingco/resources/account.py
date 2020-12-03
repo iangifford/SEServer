@@ -85,12 +85,12 @@ class AccountCreate(Resource):
     parser.add_argument('password', type=str)
     parser.add_argument('phone_number', type=str)
     parser.add_argument('address', type=str)
-    print("attempting to create account: ",str(args["email"]).lower())
     def post(self):
         print(request.data)
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
+            print("attempting to create account: ",str(args["email"]).lower())
             acc = Account(id=str(created_id), is_owner=args["is_owner"],
                           is_sitter=args["is_sitter"],
                           is_admin=args["is_admin"],
