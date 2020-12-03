@@ -18,22 +18,24 @@ def create_api(app):
 class Login(Resource):
     def post(self):
 
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('email',type=str)
+            parser.add_argument('password',type=str)
+            args = parser.parse_args()
+            print(request.data)
+            user = Account.query.filter_by(str.lower(args["email"])).first()
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('email',type=str)
-        parser.add_argument('password',type=str)
-        args = parser.parse_args()
-        print(request.data)
-        user = Account.query.filter_by(str.lower(args["email"])).first()
+            if user:
+                if check_password_hash(user.password,args["password"]):
+                    user_id = user.id
+                    auth_token = str(uuid.uuid4())
+                    live_tokens.append((auth_token,user_id))
+                    return {"id":user_id,"auth":auth_token}, 200
 
-        if user:
-            if check_password_hash(user.password,args["password"]):
-                user_id = user.id
-                auth_token = str(uuid.uuid4())
-                live_tokens.append((auth_token,user_id))
-                return {"id":user_id,"auth":auth_token}, 200
-
-        return "Bad username or password", 401
+            return "Bad username or password", 401
+        except Exception:
+            return {"msg":"Bad request"}, 400
 
 class AccountModify(Resource):
     def get(self,data):
