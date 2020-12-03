@@ -70,9 +70,9 @@ class AccountCreate(Resource):
             acc = Account(id=str(created_id),is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = args["email"], password = args["password"])
             db.session.add(acc)
             db.session.commit()
-            return {"id":str(created_id)}, 201 
+            return {"success":True}, 201 
         except Exception  as e:
             print(e)
-            return {"msg":"Bad account parameters."}, 400
+            return {"success":False}, 400
 
 
