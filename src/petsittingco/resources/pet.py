@@ -40,7 +40,7 @@ class PetCreation(Resource):
             acc = Account.query.get( str(args["id"]) )
             if not acc:
                 return {"msg":"No Account."}, 400
-            pet = Pet(id=str(created_id), owner=Account.query.get(args["id"]), name=args["name"],attributes = args["attributes"])
+            pet = Pet(id=str(created_id), owner=acc, name=args["name"],attributes = args["attributes"])
             db.session.add(pet)
             db.session.commit()
             return {"id":str(created_id)}, 201 
