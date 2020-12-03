@@ -9,8 +9,9 @@ def create_api(app):
     app_api = Api(app)
     app_api.add_resource(PetInfo,"/petinfo")
     app_api.add_resource(PetCreation,"/petcreation")
-    #delete pet
-    #modify pet
+    app_api.add_resource(PetList, "/petlist")
+    app_api.add_resource(PetModify, "/petmodify")
+    app_api.add_resource(PetDelete, "petdelete")
 
 class PetInfo(Resource):
     def get(self):
@@ -57,3 +58,11 @@ class PetList(Resource):
             if pet:
                 return { "name":pet.name, "attributes":pet.attributes }, 200
         return 404
+
+class PetModify(Resource):
+    def modify(self):
+        return 404
+
+class PetDelete(Resource):
+    def delete(self):
+        return 404 
