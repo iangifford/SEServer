@@ -5,7 +5,7 @@ from src.petsittingco.database import db, Pet, Account, Job
 import json
 import uuid
 from src.petsittingco.resources.verify_auth import verify_auth,live_tokens
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 app_api = None
 
 def create_api(app):
@@ -24,6 +24,7 @@ class Login(Resource):
         parser.add_argument('password',type=str)
         args = parser.parse_args()
         user = Account.query.filter_by(email=args["email"]).first()
+        
         if user:
             if check_password_hash(user.password,args["password"]):
                 user_id = user.id
@@ -67,7 +68,7 @@ class AccountCreate(Resource):
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
-            acc = Account(id=str(created_id),is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = args["email"], password = args["password"])
+            acc = Account(id=str(created_id),is_owner = args["is_owner"], is_sitter = args["is_sitter"], is_admin = args["is_admin"], is_shelter = args["is_shelter"], first_name = args["first_name"], last_name = args["last_name"], email = args["email"], password = generate_password_hash(args["password"],method='SHA512'))
             db.session.add(acc)
             db.session.commit()
             return {"success":True}, 201 
