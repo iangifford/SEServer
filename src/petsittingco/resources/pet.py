@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory
 from flask_restful import Resource, Api, reqparse
 from src.petsittingco.database import db, Pet, Account, Job
 from src.petsittingco.resources.verify_auth import verify_auth
+import uuid
 app_api = None
 
 def create_api(app):
@@ -27,7 +28,32 @@ class PetInfo(Resource):
 
 
 class PetCreation(Resource):
-    def get(self,data):
-        return {"Get":data}
     def post(self,data):
-        return {"Post":data}
+        parser = reqparse.RequestParser() 
+        parser.add_argument('id', type=str)
+        parser.add_argument('owner_id', type=str)
+        parser.add_argument('name',type=str)
+        parser.add_argument('attributes', type=str)
+        try:
+            created_id = uuid.uuid4()
+            args = self.parser.parse_args()
+            pet = Pet(id=str(created_id), owner_id=Account.query.get(args["id"]), name=args["name"],attributes = args["attributes"])
+            db.session.add(pet)
+            db.session.commit()
+            return {"id":str(created_id)}, 201 
+        except Exception  as e:
+            print(e)
+            return {"msg":"Bad account parameters."}, 400
+
+class PetList(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id',type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('pet_id',type=str)
+        args = parser.parse_args()
+        if verify_auth('auth','id'):
+            pet = Pet.query.get( args["pet_id"] )
+            if pet:
+                return { "name":pet.name, "attributes":pet.attributes }, 200
+        return 404
