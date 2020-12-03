@@ -45,7 +45,7 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = Account.query.filter_by(email=form.email.data).first()
+        user = Account.query.filter_by(email=(form.email.data).lower()).first()
         if user:
             if check_password_hash(user.password,form.password.data):
                 login_user(user, remember = form.remember_me.data)
@@ -61,7 +61,7 @@ def signup():
     
     if form.validate_on_submit():
         hashed_pass = generate_password_hash(form.password.data, method="sha512")
-        new_user = Account(id=str(uuid.uuid4()), email = form.email.data,first_name = form.first_name.data, last_name = form.last_name.data, is_owner=form.is_owner.data, is_shelter = form.is_shelter.data, is_admin = False, is_sitter = form.is_sitter.data, password = hashed_pass,phone_number="",address="")
+        new_user = Account(id=str(uuid.uuid4()), email = (form.email.data).lower(),first_name = form.first_name.data, last_name = form.last_name.data, is_owner=form.is_owner.data, is_shelter = form.is_shelter.data, is_admin = False, is_sitter = form.is_sitter.data, password = hashed_pass,phone_number="",address="")
         db.session.add(new_user)
         db.session.commit()
         return redirect('/signup_successful.html')

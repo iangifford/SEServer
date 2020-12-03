@@ -26,7 +26,7 @@ class Login(Resource):
             parser.add_argument('password', type=str)
             args = parser.parse_args()
             print(request.data)
-            user = Account.query.filter_by(str.lower(args["email"])).first()
+            user = Account.query.filter_by(args["email"].lower()).first()
 
             if user:
                 if check_password_hash(user.password, args["password"]):
@@ -96,7 +96,7 @@ class AccountCreate(Resource):
                           is_shelter=args["is_shelter"],
                           first_name=args["first_name"],
                           last_name=args["last_name"],
-                          email=str.lower(args["email"]),
+                          email=args["email"].lower(),
                           password=generate_password_hash(
                               args["password"], method='SHA512'),
                           phone_number=args["phone_number"],
