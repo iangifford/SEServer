@@ -53,17 +53,16 @@ class PetList(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
         parser.add_argument('auth', type=str)
-        parser.add_argument('pet_id',type=str)
         args = parser.parse_args()
-        if verify_auth('auth','id'):
+        if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
             if not acc:
                 return {"msg":"No Account."}, 400
-            pet_array = Account.query.get(args["id"]).pets
+            pet_array = acc.pets
             pet_dict = {}
             for pet in pet_array:
-                pet_dict[pet.id] = {"name":pet.name,"attributes":pet.attributes}
-                return pet_dict, 200 
+                pet_dict[pet.id] = pet.name
+            return pet_dict, 200 
         return 404
 
 class PetModify(Resource):
