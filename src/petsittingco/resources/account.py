@@ -26,8 +26,9 @@ class Login(Resource):
             parser.add_argument('password', type=str)
             args = parser.parse_args()
             print(request.data)
-            print("attempting to log in: ",str(args["email"]).lower())
-            user = Account.query.filter_by(email=(str(args["email"]).lower())).first()
+            print("attempting to log in: ", str(args["email"]).lower())
+            user = Account.query.filter_by(
+                email=(str(args["email"]).lower())).first()
 
             if user:
                 if check_password_hash(user.password, args["password"]):
@@ -38,16 +39,52 @@ class Login(Resource):
 
             return "Bad username or password", 401
         except Exception as e:
-            print (e)
+            print(e)
             return {"msg": "Bad request"}, 400
 
 
 class AccountModify(Resource):
-    def get(self, data):
-        return {"Get": data}
+    parser = reqparse.RequestParser()
+    parser.add_argument('is_owner', type=bool)
+    parser.add_argument('is_sitter', type=bool)
+    parser.add_argument('is_admin', type=bool)
+    parser.add_argument('is_shelter', type=bool)
+    parser.add_argument('first_name', type=str)
+    parser.add_argument('last_name', type=str)
+    parser.add_argument('email', type=str)
+    parser.add_argument('password', type=str)
+    parser.add_argument('phone_number', type=str)
+    parser.add_argument('address', type=str)
+    parser.add_argument('id', type=str)
+    parser.add_argument('auth', type=str)
 
-    def post(self, data):
-        return {"Post": data}
+    def put(self):
+        print(request.data)
+
+        try:
+            args = self.parser.parse_args()
+            if not verify_auth(args["auth"], args["id"]):
+                return {"msg": "Invalid ID/auth combination"}, 400
+
+            created_id = uuid.uuid4()
+            acc = Account.query.get(args["id"])
+
+            acc.is_owner = args["is_owner"]
+            acc.is_sitter = args["is_sitter"]
+            acc.is_admin = args["is_admin"]
+            acc.is_shelter = args["is_shelter"]
+            acc.first_name = args["first_name"]
+            acc.last_name = args["last_name"]
+            acc.email = str(args["email"]).lower()
+            acc.password = generate_password_hash(
+                args["password"], method='SHA512')
+            acc.phone_number = args["phone_number"]
+            acc.address = args["address"]
+            db.session.commit()
+            return {"success": True}, 201
+        except Exception as e:
+            print(e)
+            return {"success": False}, 400
 
 
 class AccountInfo(Resource):
@@ -64,11 +101,11 @@ class AccountInfo(Resource):
                     "is_sitter": acc.is_sitter,
                     "is_shelter": acc.is_shelter,
                     "is_admin": acc.is_admin,
-                    "first_name": acc.first_name, 
-                    "last_name": acc.last_name, 
+                    "first_name": acc.first_name,
+                    "last_name": acc.last_name,
                     "email": acc.email,
-                    "phone_number":acc.phone_number,
-                    "address":acc.address
+                    "phone_number": acc.phone_number,
+                    "address": acc.address
                     }, 200
         except Exception:
             return {"msg": "Malformed Request"}, 400
@@ -86,12 +123,13 @@ class AccountCreate(Resource):
     parser.add_argument('password', type=str)
     parser.add_argument('phone_number', type=str)
     parser.add_argument('address', type=str)
+
     def post(self):
         print(request.data)
         try:
             created_id = uuid.uuid4()
             args = self.parser.parse_args()
-            print("attempting to create account: ",str(args["email"]).lower())
+            print("attempting to create account: ", str(args["email"]).lower())
             acc = Account(id=str(created_id), is_owner=args["is_owner"],
                           is_sitter=args["is_sitter"],
                           is_admin=args["is_admin"],
