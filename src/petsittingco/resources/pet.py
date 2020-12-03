@@ -11,7 +11,7 @@ def create_api(app):
     app_api.add_resource(PetCreation,"/petcreation")
     app_api.add_resource(PetList, "/petlist")
     app_api.add_resource(PetModify, "/petmodify")
-    app_api.add_resource(PetDelete, "petdelete")
+    app_api.add_resource(PetDelete, "/petdelete")
 
 class PetInfo(Resource):
     def get(self):
