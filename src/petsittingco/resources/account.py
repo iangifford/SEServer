@@ -37,7 +37,8 @@ class Login(Resource):
                     return {"id": user_id, "auth": auth_token}, 200
 
             return "Bad username or password", 401
-        except Exception:
+        except Exception as e:
+            print (e)
             return {"msg": "Bad request"}, 400
 
 
