@@ -36,7 +36,7 @@ class PetCreation(Resource):
         parser.add_argument('name',type=str)
         parser.add_argument('attributes', type=str)
         try:
-            args = self.parser.parse_args()
+            args = parser.parse_args()
             if not verify_auth(args["auth"],args["id"]):
                 return {"msg":"Bad ID/Auth combination"}, 400
             created_id = uuid.uuid4()
