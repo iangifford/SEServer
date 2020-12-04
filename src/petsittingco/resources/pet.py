@@ -98,8 +98,7 @@ class PetDelete(Resource):
     def delete(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id', type=str)
-        parser.add_argument('name',type=str)
-        parser.add_argument('attributes', type=str)
+        parser.add_argument('pet_id',type=str)
         parser.add_argument('auth', type=str)
 
         args = self.parser.parse_args()
@@ -108,7 +107,7 @@ class PetDelete(Resource):
             if not acc:
                 return {"msg":"No Account"}, 400
 
-            pet = Pet.query.get(args["id"])
+            pet = Pet.query.get(args["pet_id"])
             if pet:
                 db.session.delete(pet)
                 db.session.commit()
