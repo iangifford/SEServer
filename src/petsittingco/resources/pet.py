@@ -25,7 +25,7 @@ class PetInfo(Resource):
             if pet:
                 if pet.owner_id == args["id"]:
                     return { "name":pet.name, "attributes":pet.attributes }, 200
-        return {"msg":"Bad Pet ID"},404
+        return {"msg":"Bad Pet ID"}, 400
 
 
 class PetCreation(Resource):
