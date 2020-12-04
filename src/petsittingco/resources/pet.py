@@ -78,7 +78,7 @@ class PetModify(Resource):
         parser.add_argument('attributes', type=str)
         parser.add_argument('auth', type=str)
 
-        args = self.parser.parse_args()
+        args = parser.parse_args()
         if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
             if not acc:
@@ -101,7 +101,7 @@ class PetDelete(Resource):
         parser.add_argument('pet_id',type=str)
         parser.add_argument('auth', type=str)
 
-        args = self.parser.parse_args()
+        args = parser.parse_args()
         if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
             if not acc:
