@@ -90,7 +90,7 @@ class PetModify(Resource):
                 pet.attributes = args["attributes"]
 
                 db.session.commit()
-                return {"msg": "Pet Information Modified"}, 201
+                return {"msg": "Pet Information Modified"}, 200
 
         return {"msg": "Unable to Modify"}, 400
 
