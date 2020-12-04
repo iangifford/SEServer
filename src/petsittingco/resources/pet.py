@@ -24,8 +24,8 @@ class PetInfo(Resource):
             pet = Pet.query.filter_by(id=args["pet_id"] ).first()
             if pet:
                 if pet.owner_id == args["id"]:
-                    return { "name":pet.name, "attributes":pet.attributes }, 200
-        return {"msg":"Bad Pet ID"}, 400
+                    return { "name":pet.name, "attributes":pet.attributes,"success":True }, 200
+        return {"msg":"Bad Pet ID","success":False}, 400
 
 
 class PetCreation(Resource):
@@ -38,19 +38,19 @@ class PetCreation(Resource):
         try:
             args = parser.parse_args()
             if not verify_auth(args["auth"],args["id"]):
-                return {"msg":"Bad ID/Auth combination"}, 400
+                return {"msg":"Bad ID/Auth combination","success":False}, 400
             created_id = uuid.uuid4()
 
             acc = Account.query.get( str(args["id"]) )
             if not acc:
-                return {"msg":"No Account."}, 400
+                return {"msg":"No Account.","success":False}, 400
             pet = Pet(id=str(created_id), owner=acc, name=args["name"],attributes = args["attributes"])
             db.session.add(pet)
             db.session.commit()
-            return {"id":str(created_id)}, 201 
+            return {"id":str(created_id),"success":True}, 201 
         except Exception  as e:
             print(e)
-            return {"msg":"Bad pet parameters."}, 400
+            return {"msg":"Bad pet parameters.","success":False}, 400
 
 class PetList(Resource):
     def get(self):
@@ -66,9 +66,10 @@ class PetList(Resource):
             pet_dict = {}
             for pet in pet_array:
                 pet_dict[pet.id] = pet.name
+            pet_dict["success"] = True
             print("pet_dict:",pet_dict)
             return pet_dict, 200 
-        return 404
+        return {"success":False},404
 
 class PetModify(Resource):
     def put(self):
@@ -83,7 +84,7 @@ class PetModify(Resource):
         if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
             if not acc:
-                return {"msg":"No Account"}, 400
+                return {"msg":"No Account","success":False}, 400
 
             pet = Pet.query.get([args["pet_id"]])
             if pet and pet.owner == acc:
@@ -91,9 +92,9 @@ class PetModify(Resource):
                 pet.attributes = args["attributes"]
 
                 db.session.commit()
-                return {"msg": "Pet Information Modified"}, 200
+                return {"msg": "Pet Information Modified","success":True}, 200
 
-        return {"msg": "Unable to Modify"}, 400
+        return {"msg": "Unable to Modify","success":False}, 400
 
 class PetDelete(Resource):
     def delete(self):
@@ -112,5 +113,5 @@ class PetDelete(Resource):
             if pet:
                 db.session.delete(pet)
                 db.session.commit()
-                return {"msg":"Pet Deleted"}, 200
-        return {"msg":"Pet Could Not Be Deleted"}, 400
+                return {"msg":"Pet Deleted","success":True}, 200
+        return {"msg":"Pet Could Not Be Deleted","success":False}, 400

@@ -65,7 +65,7 @@ class AccountModify(Resource):
         try:
             args = self.parser.parse_args()
             if not verify_auth(args["auth"], args["id"]):
-                return {"msg": "Invalid ID/auth combination"}, 400
+                return {"msg": "Invalid ID/auth combination","success":False}, 400
 
             created_id = uuid.uuid4()
             acc = Account.query.get(args["id"])
@@ -106,10 +106,11 @@ class AccountInfo(Resource):
                     "last_name": acc.last_name,
                     "email": acc.email,
                     "phone_number": acc.phone_number,
-                    "address": acc.address
+                    "address": acc.address,
+                    "success": True
                     }, 200
         except Exception:
-            return {"msg": "Malformed Request"}, 400
+            return {"msg": "Malformed Request","success":False}, 400
 
 
 class AccountCreate(Resource):
