@@ -29,7 +29,7 @@ class PetInfo(Resource):
 
 
 class PetCreation(Resource):
-    def post(self,data):
+    def post(self):
         parser = reqparse.RequestParser() 
         parser.add_argument('id', type=str)
         parser.add_argument('auth', type=str)
