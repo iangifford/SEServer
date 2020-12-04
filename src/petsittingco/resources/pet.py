@@ -66,6 +66,7 @@ class PetList(Resource):
             pet_dict = {}
             for pet in pet_array:
                 pet_dict[pet.id] = pet.name
+            print("pet_dict:",pet_dict)
             return pet_dict, 200 
         return 404
 
