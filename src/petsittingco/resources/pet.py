@@ -21,7 +21,7 @@ class PetInfo(Resource):
         parser.add_argument('pet_id',type=str)
         args = parser.parse_args()
         if verify_auth('auth','id'):
-            pet = Pet.query.get( args["pet_id"] )
+            pet = Pet.query.filter_by( args["pet_id"] ).first()
             if pet:
                 if pet.owner_id == args["id"]:
                     return { "name":pet.name, "attributes":pet.attributes }, 200
