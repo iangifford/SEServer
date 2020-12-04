@@ -32,11 +32,15 @@ class PetCreation(Resource):
     def post(self,data):
         parser = reqparse.RequestParser() 
         parser.add_argument('id', type=str)
+        parser.add_argument('auth', type=str)
         parser.add_argument('name',type=str)
         parser.add_argument('attributes', type=str)
         try:
-            created_id = uuid.uuid4()
             args = self.parser.parse_args()
+            if not verify_auth(args["auth"],args["id"]):
+                return {"msg":"Bad ID/Auth combination"}, 400
+            created_id = uuid.uuid4()
+            
             acc = Account.query.get( str(args["id"]) )
             if not acc:
                 return {"msg":"No Account."}, 400
