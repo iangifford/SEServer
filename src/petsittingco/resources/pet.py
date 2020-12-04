@@ -74,6 +74,7 @@ class PetModify(Resource):
     def put(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id', type=str)
+        parser.add_argument('pet_id',type=str)
         parser.add_argument('name',type=str)
         parser.add_argument('attributes', type=str)
         parser.add_argument('auth', type=str)
@@ -84,8 +85,8 @@ class PetModify(Resource):
             if not acc:
                 return {"msg":"No Account"}, 400
 
-            pet = Pet.query.get([args["id"]])
-            if pet:
+            pet = Pet.query.get([args["pet_id"]])
+            if pet and pet.owner == acc:
                 pet.name = args["name"]
                 pet.attributes = args["attributes"]
 
