@@ -40,7 +40,7 @@ class PetCreation(Resource):
             if not verify_auth(args["auth"],args["id"]):
                 return {"msg":"Bad ID/Auth combination"}, 400
             created_id = uuid.uuid4()
-            
+
             acc = Account.query.get( str(args["id"]) )
             if not acc:
                 return {"msg":"No Account."}, 400
@@ -66,14 +66,51 @@ class PetList(Resource):
             pet_dict = {}
             for pet in pet_array:
                 pet_dict[pet.id] = pet.name
-            print("pet_dict:",pet_dict)
-            return pet_dict, 200 
+                print("pet_dict:",pet_dict)
+                return pet_dict, 200 
         return 404
 
 class PetModify(Resource):
-    def modify(self):
-        return 404
+    def put(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id', type=str)
+        parser.add_argument('name',type=str)
+        parser.add_argument('attributes', type=str)
+        parser.add_argument('auth', type=str)
+
+        args = self.parser.parse_args()
+        if verify_auth(args['auth'],args['id']):
+            acc = Account.query.get( str(args["id"]) )
+            if not acc:
+                return {"msg":"No Account"}, 400
+
+            pet = Pet.query.get([args["id"]])
+            if pet:
+                pet.name = args["name"]
+                pet.attributes = args["attributes"]
+
+                db.session.commit()
+                return {"msg": "Pet Information Modified"}, 201
+
+        return {"msg": "Unable to Modify"}, 400
 
 class PetDelete(Resource):
     def delete(self):
-        return 404 
+        parser = reqparse.RequestParser()
+        parser.add_argument('id', type=str)
+        parser.add_argument('name',type=str)
+        parser.add_argument('attributes', type=str)
+        parser.add_argument('auth', type=str)
+
+        args = self.parser.parse_args()
+        if verify_auth(args['auth'],args['id']):
+            acc = Account.query.get( str(args["id"]) )
+            if not acc:
+                return {"msg":"No Account"}, 400
+
+            pet = Pet.query.get(args["id"])
+            if pet:
+                db.session.delete(pet)
+                db.session.commit()
+                return {"msg":"Pet Deleted"}, 200
+        return {"msg":"Pet Could Not Be Deleted"}, 400
