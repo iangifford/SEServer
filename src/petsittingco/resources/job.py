@@ -9,6 +9,7 @@ def create_api(app):
     app_api = Api(app)
     app_api.add_resource(JobCreation,"/jobcreation")
     app_api.add_resource(JobInfo,"/jobinfo")
+    app_api.add_resource(OwnerJobList,"/ownerjoblist")
 class JobCreation(Resource):
     def post(self):
         parser = reqparse.RequestParser() 
@@ -88,4 +89,23 @@ class JobInfo(Resource):
         return {"msg":"Bad Job ID","success":False}, 400
 
 
-# starts date end date names
+
+class OwnerJobList(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id',type=str)
+        parser.add_argument('auth', type=str)
+        args = parser.parse_args()
+        if verify_auth(args['auth'],args['id']):
+            acc = Account.query.get( str(args["id"]) )
+            if not acc:
+                return {"msg":"No Account."}, 400
+            job_array = acc.owner_jobs
+            job_dict = {}
+            for job in job_array:
+                sitter = Job.query.get(job.sitter_id)
+                job_dict[job.id] = {"sitter_name":sitter.first_name, "start_datetime",job.start_datetime}
+            job_dict["success"] = True
+            print("job_dict:",job_dict)
+            return job_dict, 200 
+        return {"success":False},404
