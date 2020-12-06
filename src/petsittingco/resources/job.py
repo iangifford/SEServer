@@ -8,7 +8,7 @@ app_api = None
 def create_api(app):
     app_api = Api(app)
     app_api.add_resource(JobCreation,"/jobcreation")
-
+    app_api.add_resource(JobInfo,"/jobinfo")
 class JobCreation(Resource):
     def post(self):
         parser = reqparse.RequestParser() 
@@ -85,4 +85,4 @@ class JobInfo(Resource):
                     else:
                         jobinfo["sitter_name"] = "No Sitter"
                     return jobinfo, 200
-        return {"msg":"Bad Pet ID","success":False}, 400
+        return {"msg":"Bad Job ID","success":False}, 400
