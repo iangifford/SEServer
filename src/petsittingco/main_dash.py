@@ -7,7 +7,7 @@ button_blueprint = Blueprint("buttons","__buttons__")
 
 @button_blueprint.route('/main_dashboard', methods=['GET'])
 @button_blueprint.route('/main_dashboard.html', methods=['GET'])
-def give_buttons():
+def main_dashboard():
     all_buttons = ""
     # Owner
     if current_user.is_owner:
