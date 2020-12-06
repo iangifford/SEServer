@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-
+from datetime import datetime
 #from dataclasses import dataclass
 db = SQLAlchemy()
 
@@ -65,10 +65,16 @@ class Job(db.Model):
 """
     #fields
     id = db.Column(db.Text, primary_key = True, unique = True, nullable = False)
-    location = db.Column(db.Text,nullable = False)
+    location = db.Column(db.Text)
+    lat = db.Column(db.Float)
+    long = db.Column(db.Float)
+    is_at_owner = db.Column(db.Boolean, nullable = False)
+    start_datetime = db.Column(db.Text, nullable = False)
+    end_datetime = db.Column(db.Text, nullable = False)
     pet_id = db.Column(db.Text, db.ForeignKey('pet.id'))
     sitter_id = db.Column(db.Text, db.ForeignKey('account.id'))
     owner_id = db.Column(db.Text, db.ForeignKey('account.id'))
     accepted = db.Column(db.Boolean, nullable = False)
+    canceled = db.Column(db.Boolean, nullable = False)
     details = db.String(db.Text)
     
