@@ -109,7 +109,7 @@ class OwnerJobList(Resource):
                     sitter_name = sitter.first_name
                 else:
                     sitter_name = "No Sitter"
-                job_dict[job.id] = {"sitter_name":sitter_name, "start_datetime":job.start_datetime}
+                job_dict[job.id] = {"sitter_name":sitter_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
             job_dict["success"] = True
             print("job_dict:",job_dict)
             return job_dict, 200 
