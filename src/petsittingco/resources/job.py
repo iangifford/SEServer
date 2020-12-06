@@ -74,8 +74,8 @@ class JobInfo(Resource):
                         "pet_id":job.pet_id,
                         "accepted":job.accepted,
                         "canceled":job.canceled,
-                        "details":job.details
-
+                        "details":job.details,
+                        "success":True
                     }
                     owner_acc = Account.query.get(id = job.owner_id)
                     jobinfo["owner_name"] = owner_acc.first_name
