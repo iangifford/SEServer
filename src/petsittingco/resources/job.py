@@ -95,6 +95,7 @@ class OwnerJobList(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
         parser.add_argument('auth', type=str)
+        parser.add_argument('is_accepted', type=bool)
         args = parser.parse_args()
         if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
@@ -109,7 +110,8 @@ class OwnerJobList(Resource):
                     sitter_name = sitter.first_name
                 else:
                     sitter_name = "No Sitter"
-                job_dict[job.id] = {"sitter_name":sitter_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
+                if job.accepted == args["is_accepted"]:
+                    job_dict[job.id] = {"sitter_name":sitter_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
             job_dict["success"] = True
             print("job_dict:",job_dict)
             return job_dict, 200 
