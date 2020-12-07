@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request, render_template
+from flask import Flask, send_from_directory, request, render_template, redirect
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
@@ -67,6 +67,6 @@ def petsitterdashboard(path=None):
 def static_files(path=None):
     print("path:",path)
     if(path=="/" or path==""):
-        return send_from_directory("static","/index.html")
+        return redirect("/index.html")
     return send_from_directory('static',path)
 
