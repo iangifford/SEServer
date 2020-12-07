@@ -29,7 +29,7 @@ class JobCreation(Resource):
             args = parser.parse_args()
             if not verify_auth(args["auth"],args["id"]):
                 return {"msg":"Bad ID/Auth combination","success":False}, 400
-            job_id = uuid.uuid4()
+            job_id = str(uuid.uuid4())
 
             owner_acc = Account.query.get( str(args["id"]) )
             pet = Pet.query.get(str(args["pet_id"]))
