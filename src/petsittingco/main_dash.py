@@ -17,7 +17,7 @@ def main_dashboard():
         all_buttons += '<form action="petsitterdashboard/dashboard.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="row"> <button class="form-control custom-btn" id="submit-button" >Sitter Dashboard</button> </div> </form>'
     # Shelter
     if current_user.is_shelter:
-        all_buttons += '<form action="shelterdashboard/dashboard.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="row"> <button class="form-control custom-btn" id="submit-button" >Shelter Dashboard</button> </div> </form>'
+        all_buttons += '<a href="shelterdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Shelter Dashboard</a>'
     #Admin
     if current_user.is_admin:
         all_buttons += '<a href="admindashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Admin Dashboard</a>'
