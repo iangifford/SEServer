@@ -11,10 +11,10 @@ def main_dashboard():
     all_buttons = ""
     # Owner
     if current_user.is_owner:
-        all_buttons += '<form action="petownerdashboard/dashboard.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="row"> <button class="form-control custom-btn" id="submit-button" >Owner Dashboard</button> </div> </form>'
+        all_buttons += '<a href="ownerdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Owner Dashboard</a>'
     # Sitter
     if current_user.is_sitter:
-        all_buttons += '<form action="petsitterdashboard/dashboard.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="row"> <button class="form-control custom-btn" id="submit-button" >Sitter Dashboard</button> </div> </form>'
+        all_buttons += '<a href="sitterdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Sitter Dashboard</a>'
     # Shelter
     if current_user.is_shelter:
         all_buttons += '<a href="shelterdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Shelter Dashboard</a>'
