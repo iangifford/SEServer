@@ -62,7 +62,7 @@ def petsitterdashboard(path=None):
     
     return send_from_directory('static/petsitterdashboard',path)
 
-@app.route('/<wildcard:path>')
+#@app.route('/<wildcard:path>')
 @app.route('/', defaults={"path":''})
 def static_files(path=None):
     print("path:",path)
