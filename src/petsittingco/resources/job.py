@@ -152,7 +152,7 @@ class AvailableJobList(Resource):
             job_array = Job.query.all()
             job_dict = {}
             for job in job_array:
-                owner = Job.query.get(job.owner_id)
+                owner = Job.query.get(job.owner_id).owner
                 owner_name = owner.first_name
                 if not (job.accepted or job.canceled):
                     job_dict[job.id] = {"location":job.location,"owner_name":owner_name,"pet_id":job.pet_id, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
