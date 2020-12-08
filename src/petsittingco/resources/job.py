@@ -108,7 +108,7 @@ class OwnerJobList(Resource):
             job_dict = {}
             for job in job_array:
                 print(job)
-                sitter = Job.query.get(job.sitter_id)
+                sitter = Account.query.get(job.sitter_id)
                 sitter_name = ""
                 if sitter:
                     sitter_name = sitter.first_name
