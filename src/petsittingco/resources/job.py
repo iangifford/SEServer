@@ -53,6 +53,7 @@ class JobCreation(Resource):
             return {"job_id":str(job_id),"success":True}, 201 
         except Exception  as e:
             print(e)
+            print("Bad Job Parameters")
             return {"msg":"Bad job parameters.","success":False}, 400
     
 class JobInfo(Resource):
