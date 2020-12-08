@@ -1,5 +1,6 @@
 from flask import Flask
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Resource, Api, reqparse,inputs
+
 from src.petsittingco.resources.verify_auth import verify_auth
 from src.petsittingco.database import db, Pet, Account, Job
 import uuid
@@ -20,7 +21,7 @@ class JobCreation(Resource):
         parser.add_argument('location',type=str)
         parser.add_argument('lat', type=float)
         parser.add_argument('long', type=float)
-        parser.add_argument('is_at_owner', type=bool)
+        parser.add_argument('is_at_owner', type=inputs.boolean)
         parser.add_argument('start_datetime',type=str)
         parser.add_argument('end_datetime', type=str)
         parser.add_argument('details', type=str)
@@ -98,7 +99,7 @@ class OwnerJobList(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
         parser.add_argument('auth', type=str)
-        parser.add_argument('is_accepted', type=bool)
+        parser.add_argument('is_accepted', type=inputs.boolean)
         args = parser.parse_args()
         if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
@@ -128,7 +129,7 @@ class SitterJobList(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
         parser.add_argument('auth', type=str)
-        parser.add_argument('is_canceled', type=bool)
+        parser.add_argument('is_canceled', type=inputs.boolean)
         args = parser.parse_args()
         if verify_auth(args['auth'],args['id']):
             acc = Account.query.get( str(args["id"]) )
