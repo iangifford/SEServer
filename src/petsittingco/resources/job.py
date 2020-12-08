@@ -23,16 +23,17 @@ class JobCreation(Resource):
         parser.add_argument('is_at_owner', type=bool)
         parser.add_argument('start_datetime',type=str)
         parser.add_argument('end_datetime', type=str)
-        parser.add_argument('pet_id', type=str)
         parser.add_argument('details', type=str)
+
         try:
             args = parser.parse_args()
+            print("id:",args["id"])
+            print("auth:",args["auth"])
             if not verify_auth(args["auth"],args["id"]):
                 return {"msg":"Bad ID/Auth combination","success":False}, 400
             job_id = str(uuid.uuid4())
 
             owner_acc = Account.query.get( str(args["id"]) )
-            pet = Pet.query.get(str(args["pet_id"]))
             if not owner_acc:
                 return {"msg":"No Account.","success":False}, 400
             job = Job(
