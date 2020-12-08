@@ -48,8 +48,6 @@ class Pet(db.Model):
     name = db.Column(db.Text, nullable = False)
     attributes = db.Column(db.Text, nullable = False)
 
-    #relationships
-    jobs = db.relationship("Job",backref="pet",lazy = 'dynamic',foreign_keys = 'Job.pet_id')
 
 
 class Job(db.Model):
@@ -71,7 +69,6 @@ class Job(db.Model):
     is_at_owner = db.Column(db.Boolean, nullable = False)
     start_datetime = db.Column(db.Text, nullable = False)
     end_datetime = db.Column(db.Text, nullable = False)
-    pet_id = db.Column(db.Text, db.ForeignKey('pet.id'))
     sitter_id = db.Column(db.Text, db.ForeignKey('account.id'))
     owner_id = db.Column(db.Text, db.ForeignKey('account.id'))
     accepted = db.Column(db.Boolean, nullable = False)
