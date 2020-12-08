@@ -107,6 +107,7 @@ class OwnerJobList(Resource):
             job_array = acc.owner_jobs
             job_dict = {}
             for job in job_array:
+                print(job)
                 sitter = Job.query.get(job.sitter_id)
                 sitter_name = ""
                 if sitter:
