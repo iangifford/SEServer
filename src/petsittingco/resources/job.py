@@ -108,14 +108,16 @@ class OwnerJobList(Resource):
             job_dict = {}
             for job in job_array:
                 print(job)
-                sitter = Account.query.get(job.sitter_id)
-                sitter_name = ""
-                if sitter:
+                if job.sitter_id:
+                    sitter = Account.query.get(job.sitter_id)
                     sitter_name = sitter.first_name
                 else:
                     sitter_name = "No Sitter"
+                
                 if job.accepted == args["is_accepted"]:
                     job_dict[job.id] = {"sitter_name":sitter_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
+                else:
+                    print("bad job")
             job_dict["success"] = True
             print("job_dict:",job_dict)
             return job_dict, 200 
