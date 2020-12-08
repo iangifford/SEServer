@@ -43,7 +43,6 @@ class JobCreation(Resource):
                 is_at_owner = args["is_at_owner"],
                 start_datetime = args["start_datetime"],
                 end_datetime = args["end_datetime"],
-                pet = pet,
                 owner = owner_acc,
                 accepted = False,
                 canceled = False,
