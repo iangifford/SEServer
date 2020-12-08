@@ -71,17 +71,18 @@ class JobInfo(Resource):
                 print("job exists")
                 if job.owner_id == args["id"] or job.sitter_id == args["id"]:
                     jobinfo = {
-                        "location":str(job.location),
-                        "lat":str(job.lat),
-                        "long":str(job.long),
+                        "location":job.location,
+                        "lat":job.lat,
+                        "long":job.long,
                         "is_at_owner":job.is_at_owner,
-                        "start_datetime":str(job.start_datetime),
-                        "end_datetime":str(job.end_datetime),
+                        "start_datetime":job.start_datetime,
+                        "end_datetime":job.end_datetime,
                         "accepted":job.accepted,
                         "canceled":job.canceled,
-                        "details":str(job.details),
+                        "details":job.details,
                         "success":True
                     }
+                    print(jobinfo)
                     print("getting owner name")
                     jobinfo['owner_name'] = str(job.owner.first_name)
                     if job.accepted:
