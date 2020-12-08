@@ -73,5 +73,5 @@ class Job(db.Model):
     owner_id = db.Column(db.Text, db.ForeignKey('account.id'))
     accepted = db.Column(db.Boolean, nullable = False)
     canceled = db.Column(db.Boolean, nullable = False)
-    details = db.String(db.Text)
+    details = db.Column(db.Text)
     
