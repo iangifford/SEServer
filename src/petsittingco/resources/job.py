@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse,inputs
 
 from src.petsittingco.resources.verify_auth import verify_auth
@@ -71,15 +71,15 @@ class JobInfo(Resource):
                 print("job exists")
                 if job.owner_id == args["id"] or job.sitter_id == args["id"]:
                     jobinfo = {
-                        "location":job.location,
-                        "lat":job.lat,
-                        "long":job.long,
+                        "location":str(job.location),
+                        "lat":str(job.lat),
+                        "long":str(job.long),
                         "is_at_owner":job.is_at_owner,
-                        "start_datetime":job.start_datetime,
-                        "end_datetime":job.end_datetime,
+                        "start_datetime":str(job.start_datetime),
+                        "end_datetime":str(job.end_datetime),
                         "accepted":job.accepted,
                         "canceled":job.canceled,
-                        "details":job.details,
+                        "details":str(job.details),
                         "success":True
                     }
                     print("getting owner name")
@@ -88,9 +88,9 @@ class JobInfo(Resource):
                         sitter_acc = Account.query.get(job.sitter_id)
                         jobinfo['sitter_name'] = sitter_acc.first_name
                     else:
-                        jobinfo['sitter_name'] = "No Sitter"
+                        jobinfo['sitter_name'] = str("No Sitter")
                     print("returning")
-                    return jobinfo, 200
+                    return jsonify(jobinfo), 200
         return {"msg":"Bad Job ID","success":False}, 400
 
 
