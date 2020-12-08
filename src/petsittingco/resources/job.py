@@ -68,6 +68,7 @@ class JobInfo(Resource):
         if verify_auth('auth','id'):
             job = Job.query.get(args["job_id"])
             if job:
+                print("job exists")
                 if job.owner_id == args["id"] or job.sitter_id == args["id"]:
                     jobinfo = {
                         "location":job.location,
@@ -81,7 +82,7 @@ class JobInfo(Resource):
                         "details":job.details,
                         "success":True
                     }
-                    
+                    print("getting owner name")
                     jobinfo["owner_name"] = job.owner.first_name
                     if job.accepted:
                         sitter_acc = Account.query.get(job.sitter_id)
