@@ -89,6 +89,7 @@ class JobInfo(Resource):
                         jobinfo['sitter_name'] = sitter_acc.first_name
                     else:
                         jobinfo['sitter_name'] = "No Sitter"
+                    print("returning")
                     return jobinfo, 200
         return {"msg":"Bad Job ID","success":False}, 400
 
