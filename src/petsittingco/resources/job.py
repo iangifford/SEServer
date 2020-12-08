@@ -66,7 +66,7 @@ class JobInfo(Resource):
         parser.add_argument('job_id',type=str)
         args = parser.parse_args()
         if verify_auth('auth','id'):
-            job = Job.query.get(id=args["job_id"])
+            job = Job.query.get(args["job_id"])
             if job:
                 if job.owner_id == args["id"] or job.sitter_id == args["id"]:
                     jobinfo = {
@@ -76,7 +76,6 @@ class JobInfo(Resource):
                         "is_at_owner":job.is_at_owner,
                         "start_datetime":job.start_datetime,
                         "end_datetime":job.end_datetime,
-                        "pet_id":job.pet_id,
                         "accepted":job.accepted,
                         "canceled":job.canceled,
                         "details":job.details,
