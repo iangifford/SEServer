@@ -91,7 +91,7 @@ class JobInfo(Resource):
                     else:
                         jobinfo['sitter_name'] = str("No Sitter")
                     print("returning")
-                    return jsonify(jobinfo), 200
+                    return jobinfo, 200
         return {"msg":"Bad Job ID","success":False}, 400
 
 
