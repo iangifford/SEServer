@@ -79,7 +79,7 @@ class JobInfo(Resource):
                         "end_datetime":job.end_datetime,
                         "accepted":job.accepted,
                         "canceled":job.canceled,
-                        "details":job.details,
+                        "details":str(job.details),
                         "success":True
                     }
                     print(jobinfo)
