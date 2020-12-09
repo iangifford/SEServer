@@ -6,8 +6,8 @@ from src.petsittingco.database import db, Pet
 
 pet_blueprint = Blueprint("pets","__pets__")
 
-@pet_blueprint.route('/petownerdashboard/pets', methods=['GET'])
-@pet_blueprint.route('/petownerdashboard/pets.html', methods=['GET'])
+@pet_blueprint.route('../petownerdashboard/pets', methods=['GET'])
+@pet_blueprint.route('../petownerdashboard/pets.html', methods=['GET'])
 def pets():
     pets = ""
     user_pet_array = current_user.pets
