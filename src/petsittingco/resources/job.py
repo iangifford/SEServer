@@ -148,7 +148,7 @@ class SitterJobList(Resource):
             job_array = acc.sitter_jobs
             job_dict = {}
             for job in job_array:
-                owner = Job.query.get(job.owner_id)
+                owner = job.owner
                 owner_name = owner.first_name
                 if job.canceled == args["is_canceled"]:
                     job_dict[job.id] = {"owner_name":owner_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
