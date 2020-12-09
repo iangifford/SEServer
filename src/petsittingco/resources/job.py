@@ -239,12 +239,12 @@ class JobModify(Resource):
             job = Job.query.get(args["job_id"])
             if not job or not job.owner_id == args["id"]:
                 return {"msg":"User does not own a job of that id", "success":False}, 404
-            job.location = args["location"],
-            job.lat = args["lat"],
-            job.long = args["long"],
-            job.is_at_owner = args["is_at_owner"],
-            job.start_datetime = args["start_datetime"],
-            job.end_datetime = args["end_datetime"],
+            job.location = args["location"]
+            job.lat = args["lat"]
+            job.long = args["long"]
+            job.is_at_owner = args["is_at_owner"]
+            job.start_datetime = args["start_datetime"]
+            job.end_datetime = args["end_datetime"]
             job.details = args["details"]
     
             db.session.commit()
