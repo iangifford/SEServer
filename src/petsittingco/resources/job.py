@@ -193,7 +193,7 @@ class JobSearch(Resource):
                 if not (job.accepted or job.canceled):
                     if type(job.lat) is float and type(job.long) is float:
                         if calc_lat_long_distance(job.lat, job.long, args["lat"], args["lon"]) <= self.MAX_DISTANCE:
-                            job_dict[job.id] = {"location":job.location, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
+                            job_dict[job.id] = {"location":job.location, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime, "owner_name":owner_name}
             job_dict["success"] = True
             print("job_dict:",job_dict)
             return job_dict, 200 
