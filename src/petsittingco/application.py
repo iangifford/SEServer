@@ -10,6 +10,7 @@ from werkzeug.routing import BaseConverter
 from src.petsittingco.resources.resource_map import apis
 from src.petsittingco.login import login_manager, login_blueprint, AdminModelView
 from src.petsittingco.main_dash import button_blueprint
+from src.petsittingco.owner_pets import pet_blueprint
 from src.petsittingco.database import db, Account
 
 #init app
@@ -36,6 +37,7 @@ login_manager.init_app(app)
 #add blueprints
 app.register_blueprint(login_blueprint)
 app.register_blueprint(button_blueprint)
+app.register_blueprint(pet_blueprint)
 
 #init admin dashboard
 admin = Admin(app)
