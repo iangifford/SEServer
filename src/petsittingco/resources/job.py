@@ -76,30 +76,30 @@ class JobInfo(Resource):
             job = Job.query.get(args["job_id"])
             if job:
                 print("job exists")
-                if job.owner_id == args["id"] or job.sitter_id == args["id"]:
-                    jobinfo = {
-                        "location":job.location,
-                        "lat":job.lat,
-                        "long":job.long,
-                        "is_at_owner":job.is_at_owner,
-                        "start_datetime":job.start_datetime,
-                        "end_datetime":job.end_datetime,
-                        "accepted":job.accepted,
-                        "canceled":job.canceled,
-                        "details":job.details,
-                        "success":True
-                    }
-                    print(jobinfo)
-                    print("getting owner name")
-                    jobinfo['owner_name'] = str(job.owner.first_name)
-                    jobinfo['owner_id'] = job.owner_id
-                    if job.accepted:
-                        sitter_acc = Account.query.get(job.sitter_id)
-                        jobinfo['sitter_name'] = sitter_acc.first_name
-                    else:
-                        jobinfo['sitter_name'] = str("No Sitter")
-                    print("returning")
-                    return jobinfo, 200
+                ##if job.owner_id == args["id"] or job.sitter_id == args["id"]:
+                jobinfo = {
+                    "location":job.location,
+                    "lat":job.lat,
+                    "long":job.long,
+                    "is_at_owner":job.is_at_owner,
+                    "start_datetime":job.start_datetime,
+                    "end_datetime":job.end_datetime,
+                    "accepted":job.accepted,
+                    "canceled":job.canceled,
+                    "details":job.details,
+                    "success":True
+                }
+                print(jobinfo)
+                print("getting owner name")
+                jobinfo['owner_name'] = str(job.owner.first_name)
+                jobinfo['owner_id'] = job.owner_id
+                if job.accepted:
+                    sitter_acc = Account.query.get(job.sitter_id)
+                    jobinfo['sitter_name'] = sitter_acc.first_name
+                else:
+                    jobinfo['sitter_name'] = str("No Sitter")
+                print("returning")
+                return jobinfo, 200
         return {"msg":"Bad Job ID","success":False}, 400
 
 
