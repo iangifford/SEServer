@@ -199,7 +199,7 @@ class JobSearch(Resource):
         return {"success":False},404
 
 def calc_lat_long_distance(lat1, lon1, lat2, lon2):
-    earth_radius = 3,958.8
+    earth_radius = 3958.8
 
     lat1 = radians(lat1)
     lon1 = radians(lon1)
