@@ -4,6 +4,8 @@ from flask_restful import Resource, Api, reqparse,inputs
 from src.petsittingco.resources.verify_auth import verify_auth
 from src.petsittingco.database import db, Pet, Account, Job
 import uuid
+
+from math import sin, cos, sqrt, atan2, radians
 app_api = None
 
 def create_api(app):
@@ -13,6 +15,10 @@ def create_api(app):
     app_api.add_resource(OwnerJobList,"/ownerjoblist")
     app_api.add_resource(SitterJobList,"/sitterjoblist")
     app_api.add_resource(AvailableJobList,"/availablejoblist")
+    app_api.add_resource(JobSearch, "/jobsearch")
+    app_api.add_resource(JobModify, "/jobmodify")
+    app_api.add_resource(JobDelete, "/jobdelete")
+    app_api.add_resource(JobAccept, "/jobaccept")
 class JobCreation(Resource):
     def post(self):
         parser = reqparse.RequestParser() 
@@ -167,3 +173,135 @@ class AvailableJobList(Resource):
             print("job_dict:",job_dict)
             return job_dict, 200 
         return {"success":False},404
+
+class JobSearch(Resource):
+    MAX_DISTANCE = 50
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id',type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('lat',type=float)
+        parser.add_argument('lon',type=float)
+        
+        args = parser.parse_args()
+        if verify_auth(args['auth'],args['id']):
+            job_array = Job.query.all()
+            job_dict = {}
+            for job in job_array:
+                owner = Job.query.get(job.owner_id).owner
+                owner_name = owner.first_name
+                if not (job.accepted or job.canceled):
+                    if calc_lat_long_distance(job.lat, job.long, args["lat"], args["long"]) <= MAX_DISTANCE:
+                        job_dict[job.id] = {"location":job.location,"owner_name":owner_name,"pet_id":job.pet_id, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
+            job_dict["success"] = True
+            print("job_dict:",job_dict)
+            return job_dict, 200 
+        return {"success":False},404
+
+def calc_lat_long_distance(lat1, lon1, lat2, lon2):
+    earth_radius = 3,958.8
+
+    lat1 = radians(lat1)
+    lon1 = radians(lon1)
+    lat2 = radians(lat2)
+    lon2 = radians(lon2)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = earth_radius * c
+
+    return distance
+
+class JobModify(Resource):
+    def put(self):
+        parser = reqparse.RequestParser() 
+        parser.add_argument('id', type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('location',type=str)
+        parser.add_argument('lat', type=float)
+        parser.add_argument('long', type=float)
+        parser.add_argument('is_at_owner', type=inputs.boolean)
+        parser.add_argument('start_datetime',type=str)
+        parser.add_argument('end_datetime', type=str)
+        parser.add_argument('details', type=str)
+        parser.add_argument('job_id', type=str)
+
+        try:
+            args = parser.parse_args()
+            print("id:",args["id"])
+            print("auth:",args["auth"])
+            if not verify_auth(args["auth"],args["id"]):
+                return {"msg":"Bad ID/Auth combination","success":False}, 400
+            job = Job.query.get(args["job_id"])
+            if not job or not job.owner_id == args["id"]:
+                return {"msg":"User does not own a job of that id", "success":False}, 404
+            job.location = args["location"],
+            job.lat = args["lat"],
+            job.long = args["long"],
+            job.is_at_owner = args["is_at_owner"],
+            job.start_datetime = args["start_datetime"],
+            job.end_datetime = args["end_datetime"],
+            job.details = args["details"]
+    
+            db.session.commit()
+            return {"success":True}, 201 
+        except Exception  as e:
+            print(e)
+            print("Bad Job Parameters")
+            return {"msg":"Bad job parameters.","success":False}, 400
+
+class JobDelete(Resource):
+    def delete(self):
+        parser = reqparse.RequestParser() 
+        parser.add_argument('id', type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('job_id', type=str)
+
+        try:
+            args = parser.parse_args()
+            print("id:",args["id"])
+            print("auth:",args["auth"])
+            if not verify_auth(args["auth"],args["id"]):
+                return {"msg":"Bad ID/Auth combination","success":False}, 400
+            job = Job.query.get(args["job_id"])
+            if not job or not job.owner_id == args["id"]:
+                return {"msg":"User does not own a job of that id", "success":False}, 404
+            job.canceled = True
+            db.session.commit()
+            return {"success":True}, 201 
+        except Exception  as e:
+            print(e)
+            print("Bad Job Parameters")
+            return {"msg":"Bad job parameters.","success":False}, 400
+
+class JobAccept(Resource):
+    def post(self):
+        parser = reqparse.RequestParser() 
+        parser.add_argument('id', type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('job_id', type=str)
+
+        try:
+            args = parser.parse_args()
+            print("id:",args["id"])
+            print("auth:",args["auth"])
+            if not verify_auth(args["auth"],args["id"]):
+                return {"msg":"Bad ID/Auth combination","success":False}, 400
+            job = Job.query.get(args["job_id"])
+            if not job or job.accepted or job.canceled:
+                return {"msg":"Invalid job to accept", "success":False}, 404
+            user = Account.query.get(args["id"])
+            if not user:
+                return {"msg": "Bad sitter","success":False}, 400
+            job.accepted = True
+            job.sitter = user
+            db.session.commit()
+            return {"success":True}, 201 
+        except Exception  as e:
+            print(e)
+            print("Bad Job Parameters")
+            return {"msg":"Bad job parameters.","success":False}, 400
