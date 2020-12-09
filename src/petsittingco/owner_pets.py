@@ -11,6 +11,10 @@ pet_blueprint = Blueprint("pets","__pets__")
 def pets():
     pets = ""
     user_pet_array = current_user.pets
+    if not user_pet_array:
+        pets += "You Have No Pets Yet. Add Some Pets!"
+
     for pet_info in user_pet_array:
         pets += "<br>" + pet_info.name + "<br>" + pet_info.attributes + "<br>"
+
     return render_template("pets.html", pet_list=pets)
