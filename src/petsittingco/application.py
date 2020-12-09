@@ -9,8 +9,8 @@ from flask_bootstrap import Bootstrap
 from werkzeug.routing import BaseConverter
 from src.petsittingco.resources.resource_map import apis
 from src.petsittingco.login import login_manager, login_blueprint, AdminModelView
-from src.petsittingco.main_dash import button_blueprint
-from src.petsittingco.owner_pets import pet_blueprint
+from src.petsittingco.routes.main_dash import button_blueprint
+from src.petsittingco.routes.owner_pets import pet_blueprint
 from src.petsittingco.database import db, Account
 
 #init app

@@ -1,1 +1,0 @@
-#for default flask routes (web pages, images, other generally static content)
