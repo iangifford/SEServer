@@ -19,6 +19,7 @@ def create_api(app):
     app_api.add_resource(JobModify, "/jobmodify")
     app_api.add_resource(JobDelete, "/jobdelete")
     app_api.add_resource(JobAccept, "/jobaccept")
+    app_api.add_resource(JobUnaccept, "/jobunaccept")
 class JobCreation(Resource):
     def post(self):
         parser = reqparse.RequestParser() 
@@ -301,6 +302,34 @@ class JobAccept(Resource):
                 return {"msg": "Bad sitter","success":False}, 400
             job.accepted = True
             job.sitter = user
+            db.session.commit()
+            return {"success":True}, 201 
+        except Exception  as e:
+            print(e)
+            print("Bad Job Parameters")
+            return {"msg":"Bad job parameters.","success":False}, 400
+
+class JobUnaccept(Resource):
+    def delete(self):
+        parser = reqparse.RequestParser() 
+        parser.add_argument('id', type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('job_id', type=str)
+
+        try:
+            args = parser.parse_args()
+            print("id:",args["id"])
+            print("auth:",args["auth"])
+            if not verify_auth(args["auth"],args["id"]):
+                return {"msg":"Bad ID/Auth combination","success":False}, 400
+            job = Job.query.get(args["job_id"])
+            if not job or not job.accepted:
+                return {"msg":"Invalid job to accept", "success":False}, 404
+            user = Account.query.get(args["id"])
+            if not user:
+                return {"msg": "Bad sitter","success":False}, 400
+            job.accepted = False
+            job.sitter = None
             db.session.commit()
             return {"success":True}, 201 
         except Exception  as e:
