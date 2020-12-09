@@ -16,5 +16,6 @@ def pets():
 
     for pet_info in user_pet_array:
         pets += '<p> <br>' + pet_info.name + '<br>' + pet_info.attributes + '<br> </p>'
+    print(pets)
 
     return render_template("pets.html", pet_list=pets)
