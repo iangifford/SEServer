@@ -165,7 +165,7 @@ class AvailableJobList(Resource):
             job_array = Job.query.all()
             job_dict = {}
             for job in job_array:
-                owner = Job.query.get(job.owner_id).owner
+                owner = job.owner
                 owner_name = owner.first_name
                 if not (job.accepted or job.canceled):
                     job_dict[job.id] = {"location":job.location,"owner_name":owner_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
@@ -188,7 +188,7 @@ class JobSearch(Resource):
             job_array = Job.query.all()
             job_dict = {}
             for job in job_array:
-                owner = Job.query.get(job.owner_id).owner
+                owner = owner = job.owner
                 owner_name = owner.first_name
                 if not (job.accepted or job.canceled):
                     if calc_lat_long_distance(job.lat, job.long, args["lat"], args["lon"]) <= self.MAX_DISTANCE:
