@@ -6,8 +6,8 @@ from src.petsittingco.database import db, Pet
 
 pet_blueprint = Blueprint("pets","__pets__")
 
-@pet_blueprint.route('/pets', methods=['GET'])
-@pet_blueprint.route('/pets.html', methods=['GET'])
+@pet_blueprint.route('/petownerdashboard/pets', methods=['GET'])
+@pet_blueprint.route('/petownerdashboard/pets.html', methods=['GET'])
 def pets():
     pets = ""
     user_pet_array = current_user.pets
@@ -18,3 +18,10 @@ def pets():
         pets += '<p> <br>' + pet_info.name + '<br>' + pet_info.attributes + '<br> </p>'
 
     return render_template("petownerdashboard/pets.html", pet_list=pets)
+
+
+@pet_blueprint.route('/petownerdashboard/dashboard.html', methods=['GET'])
+@pet_blueprint.route('/petownerdashboard/dashboard', methods=['GET'])
+def pet_owner_dashboard():
+    return render_template("petownerdashboard/dashboard.html")
+
