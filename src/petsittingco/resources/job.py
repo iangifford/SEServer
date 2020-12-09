@@ -191,7 +191,7 @@ class JobSearch(Resource):
                 owner = owner = job.owner
                 owner_name = owner.first_name
                 if not (job.accepted or job.canceled):
-                    if type(job.lat) is float and type(job.lon) is float:
+                    if type(job.lat) is float and type(job.long) is float:
                         if calc_lat_long_distance(job.lat, job.long, args["lat"], args["lon"]) <= self.MAX_DISTANCE:
                             job_dict[job.id] = {"location":job.location, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
             job_dict["success"] = True
