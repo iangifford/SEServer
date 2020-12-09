@@ -123,7 +123,7 @@ class OwnerJobList(Resource):
                 else:
                     sitter_name = "No Sitter"
                 
-                if job.accepted == args["is_accepted"]:
+                if job.accepted == args["is_accepted"] and not job.canceled:
                     job_dict[job.id] = {"sitter_name":sitter_name, "start_datetime":job.start_datetime, "end_datetime":job.end_datetime}
                 else:
                     print("bad job")
