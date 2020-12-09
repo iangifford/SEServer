@@ -23,8 +23,8 @@ class PetInfo(Resource):
         if verify_auth('auth','id'):
             pet = Pet.query.filter_by(id=args["pet_id"] ).first()
             if pet:
-                if pet.owner_id == args["id"]:
-                    return { "name":pet.name, "attributes":pet.attributes,"success":True }, 200
+                #if pet.owner_id == args["id"]:
+                return { "name":pet.name, "attributes":pet.attributes,"success":True }, 200
         return {"msg":"Bad Pet ID","success":False}, 400
 
 
