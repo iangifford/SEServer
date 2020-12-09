@@ -91,6 +91,7 @@ class JobInfo(Resource):
                     print(jobinfo)
                     print("getting owner name")
                     jobinfo['owner_name'] = str(job.owner.first_name)
+                    jobinfo['owner_id'] = job.owner_id
                     if job.accepted:
                         sitter_acc = Account.query.get(job.sitter_id)
                         jobinfo['sitter_name'] = sitter_acc.first_name
