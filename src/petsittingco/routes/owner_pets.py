@@ -33,7 +33,7 @@ def pets():
 @login_required
 @pet_blueprint.route('/petownerdashboard/delete', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/delete.html', methods=['GET'])
-def delete_pet(pet_id):
+def delete_pet():
     message = ""
     parser = reqparse.RequestParser()
     parser.add_argument('pet_id',type=str)
