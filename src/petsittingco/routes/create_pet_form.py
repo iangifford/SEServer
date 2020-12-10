@@ -29,7 +29,7 @@ def pet_forms():
         
         pet_attributes_string = str(pet_attr_dict)
 
-        new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name, attributes=pet_attributes_string)
+        new_pet = Pet(id=str(uuid.uuid4()), owner_id=str(current_user.id), name=form.pet_name, attributes=pet_attributes_string)
         db.session.add(new_pet)
         db.session.commit()
 
