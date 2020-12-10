@@ -25,7 +25,7 @@ def pets():
             pets += '<br> This Pet is Noisy <br>'
         if pet_temp_dict["trained"]:
             pets += '<br> This Pet is Trained<br>'
-        pets += '<br>' + pet_temp_dict["other_info"] + '<br></p>'
+        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p>'
 
     pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br>'
     return render_template("petownerdashboard/pets.html", pet_list=pets)
