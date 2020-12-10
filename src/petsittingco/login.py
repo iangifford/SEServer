@@ -32,7 +32,7 @@ class RegisterForm(FlaskForm):
 class AdminModelView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
-
+    column_searchable_list = ["first_name","last_name","name","location","owner_id","sitter_id"]
 
 @login_manager.user_loader
 def load_user(id):
