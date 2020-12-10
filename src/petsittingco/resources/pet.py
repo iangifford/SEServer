@@ -52,7 +52,7 @@ class PetCreation(Resource):
             print(e)
             return {"msg":"Bad pet parameters.","success":False}, 400
 
-class PetList(Resource):
+class SitterPetList(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
@@ -72,7 +72,7 @@ class PetList(Resource):
             return pet_dict, 200 
         return {"success":False},404
 
-class SitterPetList(Resource):
+class PetList(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('id',type=str)
