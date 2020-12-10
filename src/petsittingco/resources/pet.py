@@ -12,7 +12,7 @@ def create_api(app):
     app_api.add_resource(PetList, "/petlist")
     app_api.add_resource(PetModify, "/petmodify")
     app_api.add_resource(PetDelete, "/petdelete")
-
+    app_api.add_resource(SitterPetList,"/sitterpetlist")
 class PetInfo(Resource):
     def get(self):
         parser = reqparse.RequestParser()
@@ -51,6 +51,26 @@ class PetCreation(Resource):
         except Exception  as e:
             print(e)
             return {"msg":"Bad pet parameters.","success":False}, 400
+
+class SitterPetList(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('id',type=str)
+        parser.add_argument('auth', type=str)
+        parser.add_argument('owner_id', type=str)
+        args = parser.parse_args()
+        if verify_auth(args['auth'],args['id']):
+            acc = Account.query.get( str(args["owner_id"]) )
+            if not acc:
+                return {"msg":"No Account."}, 400
+            pet_array = acc.pets
+            pet_dict = {}
+            for pet in pet_array:
+                pet_dict[pet.id] = pet.name
+            pet_dict["success"] = True
+            print("pet_dict:",pet_dict)
+            return pet_dict, 200 
+        return {"success":False},404
 
 class PetList(Resource):
     def get(self):
