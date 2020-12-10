@@ -540,6 +540,7 @@ https://templatemo.com/tm-538-digital-trend
   .contact-form .form-control {
     box-shadow: var(--gray-color);
     background: var(--box-bg);
+    color: var(--dark-color);
     border: 0;
     padding: 1.7em 1.3em;
     margin: 14px 0;
