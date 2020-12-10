@@ -33,6 +33,9 @@ class AdminModelViewAcc(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
     column_searchable_list = ["first_name","last_name","email","address","phone_number"]
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for("login"))
 
 class AdminModelViewJob(ModelView):
     def is_accessible(self):
