@@ -6,6 +6,7 @@ from flask_restful import Resource, Api, reqparse
 from src.petsittingco.database import db, Pet
 from wtforms.validators import InputRequired, Length
 import uuid
+import json
 
 pet_form_blueprint = Blueprint("pet_forms","__pet_forms__")
 
@@ -27,7 +28,7 @@ def pet_forms():
         # pet_attributes_string = ""
         pet_attr_dict = {"pet_name":form.pet_name, "pet_type":"", "other_type":form.pet_type, "energetic":form.is_energetic,  "noisy":form.is_noisy, "trained":form.is_trained, "other info":form.other_info} 
         
-        new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name, attributes=str(pet_attr_dict))
+        new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name, attributes=json.dumps(pet_attr_dict))
         db.session.add(new_pet)
         db.session.commit()
 
