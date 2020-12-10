@@ -11,7 +11,6 @@ pet_form_blueprint = Blueprint("pets","__pets__")
 
 class RegisterForm(FlaskForm):
     pet_name = StringField('Pet Name', validators=[InputRequired(), Length(min=4,max=64)])
-    pet_type = StringField('Animal', validators=[InputRequired(), Length(max=64)])
     is_energetic = BooleanField('Energetic?')
     is_noisy = BooleanField('Noisy?')
     is_trained = BooleanField('Trained?')
