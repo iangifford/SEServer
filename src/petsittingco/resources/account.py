@@ -140,7 +140,7 @@ class AccountCreate(Resource):
                           last_name=args["last_name"],
                           email=str(args["email"]).lower(),
                           password=generate_password_hash(
-                              args["password"], method='SHA512'),
+                              args["password"], method='sha512'),
                           phone_number=args["phone_number"],
                           address=args["address"])
             db.session.add(acc)

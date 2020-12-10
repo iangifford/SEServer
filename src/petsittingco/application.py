@@ -11,6 +11,7 @@ from src.petsittingco.resources.resource_map import apis
 from src.petsittingco.login import login_manager, login_blueprint, AdminModelView
 from src.petsittingco.routes.main_dash import button_blueprint
 from src.petsittingco.routes.owner_pets import pet_blueprint
+from src.petsittingco.routes.create_pet_form import pet_form_blueprint
 from src.petsittingco.database import db, Account
 
 #init app
@@ -38,7 +39,7 @@ login_manager.init_app(app)
 app.register_blueprint(login_blueprint)
 app.register_blueprint(button_blueprint)
 app.register_blueprint(pet_blueprint)
-
+app.register_blueprint(pet_form_blueprint)
 #init admin dashboard
 admin = Admin(app)
 admin.add_view(AdminModelView(Account, db.session))
