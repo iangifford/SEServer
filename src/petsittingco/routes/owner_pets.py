@@ -25,18 +25,22 @@ def pets():
             pets += '<br> This Pet is Noisy <br>'
         if pet_temp_dict["trained"]:
             pets += '<br> This Pet is Trained<br>'
-        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p> <br> <form action="../petownerdashboard/delete/' + pet_info.id + '" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Delete Pet</button> </div> </div> </form><br>'
+        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p> <br> <form action="../petownerdashboard/delete.html?pet_id=' + pet_info.id + '" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Delete Pet</button> </div> </div> </form><br>'
 
     pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br> <form action="../petownerdashboard/change_pet.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Modify Pet</button> </div> </div> </form><br>'
     return render_template("petownerdashboard/pets.html", pet_list=pets)
 
 @login_required
-@pet_blueprint.route('/petownerdashboard/delete/<data>', methods=['GET'])
-def delete_pet(data):
+@pet_blueprint.route('/petownerdashboard/delete', methods=['GET'])
+@pet_blueprint.route('/petownerdashboard/delete.html', methods=['GET'])
+def delete_pet():
     message = ""
+    parser = reqparse.RequestParser()
+    parser.add_argument('pet_id',type=str)
 
+    args = parser.parse_args()
 
-    pet = Pet.query.get(data)
+    pet = Pet.query.get(args["pet_id"])
     if not pet:
         message += "This Pet Could not Be Deleted."
     print("bad pet")
