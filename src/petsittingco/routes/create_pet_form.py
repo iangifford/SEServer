@@ -24,14 +24,12 @@ def pet_forms():
 
     if form.validate_on_submit():
         pet_attr_dict = {} 
-        #pet_attributes_string = ""
+   
         pet_attr_dict = {"pet_name":form.pet_name, "pet_type":"", "other_type":form.pet_type, "energetic":form.is_energetic,  "noisy":form.is_noisy, "trained":form.is_trained, "other info":form.other_info} 
 
         new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name, attributes=str(pet_attr_dict))
         db.session.add(new_pet)
         db.session.commit()
 
-        # pet_attributes_string += "<br> <p>"+ str(pet_attr_dict) + "<br> </p>"
-        
         return redirect('/petownerdashboard/pets.html')
     return render_template('/petownerdashboard/pet_forms.html', pet_form=form )
