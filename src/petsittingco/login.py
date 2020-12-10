@@ -50,8 +50,8 @@ def login():
             if check_password_hash(user.password,form.password.data):
                 login_user(user, remember = form.remember_me.data)
                 return redirect(url_for("buttons.main_dashboard"))
-
-        return "Bad username or password"
+            return "Bad email+password combo"
+        return "User does not exist."
     return render_template("signin.html", form=form)
 
 @login_blueprint.route('/signup', methods=['GET','POST'])
