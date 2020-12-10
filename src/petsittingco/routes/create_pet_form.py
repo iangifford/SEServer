@@ -17,7 +17,7 @@ class RegisterForm(FlaskForm):
 
     is_noisy = BooleanField('Noisy?')
     is_trained = BooleanField('Trained?')
-    other_info = StringField('Other Information', validators=[InputRequired(), Length(max=200)])
+    other_info = StringField('Other Information', validators=[InputRequired(), Length(min=0,max=200)])
 
 @login_required
 @pet_form_blueprint.route('/petownerdashboard/pet_forms', methods=['GET', 'POST'])
