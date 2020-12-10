@@ -51,13 +51,13 @@ class AdminModelViewJob(ModelView):
             return redirect(url_for("login"))
 class AdminModelViewPet(ModelView):
     column_searchable_list = ["name","owner_id"]
-    
+
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
 
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():
-            return redirect(url_for("login"))
+            return redirect("/login")
 @login_manager.user_loader
 def load_user(id):
     return Account.query.get(id)
