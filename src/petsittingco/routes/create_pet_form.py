@@ -19,6 +19,7 @@ class RegisterForm(FlaskForm):
     is_trained = BooleanField('Trained?')
     other_info = StringField('Other Information', validators=[InputRequired(), Length(max=200)])
 
+@login_required
 @pet_form_blueprint.route('/petownerdashboard/pet_forms', methods=['GET', 'POST'])
 @pet_form_blueprint.route('/petownerdashboard/pet_forms.html', methods=['GET', 'POST'])
 def pet_forms():
@@ -27,9 +28,9 @@ def pet_forms():
     if form.validate_on_submit():
         pet_attr_dict = {} 
    
-        pet_attr_dict = {"pet_name":form.pet_name, "pet_type":"", "other_type":form.pet_type, "energetic":form.is_energetic,  "noisy":form.is_noisy, "trained":form.is_trained, "other info":form.other_info} 
+        pet_attr_dict = {"pet_name":form.pet_name.data, "pet_type":"", "other_type":form.pet_type, "energetic":form.is_energetic,  "noisy":form.is_noisy, "trained":form.is_trained, "other info":form.other_info} 
 
-        new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name, attributes=str(pet_attr_dict))
+        new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name.data, attributes=str(pet_attr_dict))
         db.session.add(new_pet)
         db.session.commit()
 
