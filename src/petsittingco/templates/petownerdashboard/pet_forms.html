@@ -82,7 +82,11 @@ https://templatemo.com/tm-538-digital-trend
             <div class="col-lg-6 col-12">
               {{ pet_form.hidden_tag() }}
               {{ wtf.form_field(pet_form.pet_name) }}
-              {{ wtf.form_field(pet_form.attributes) }}
+              {{ wtf.form_field(pet_form.pet_type) }}
+              {{ wtf.form_field(pet_form.is_energetic) }}
+              {{ wtf.form_field(pet_form.is_noisy) }}
+              {{ wtf.form_field(pet_form.is_trained) }}
+              {{ wtf.form_field(pet_form.other_info) }}
             </div>
           </div>
           <div class="col-lg-5 mx-auto col-1">
