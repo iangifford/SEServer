@@ -20,7 +20,7 @@ def main_dashboard():
         all_buttons += '<a href="../petshelterdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Shelter Dashboard</a><br>'
     #Admin
     if current_user.is_admin:
-        all_buttons += '<a href="../admindashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Admin Dashboard</a><br>'
+        all_buttons += '<a href="../admin" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Admin Dashboard</a><br>'
     # No Roles 
     if current_user.is_owner == False and current_user.is_sitter == False and current_user.is_shelter == False and current_user.is_admin == False:
         all_buttons += '<p> Did Not Choose Any Roles. Please Modify Account.</p>'
