@@ -536,8 +536,8 @@ https://templatemo.com/tm-538-digital-trend
      CONTACT              
   -----------------------------------------*/
 
-  .newsletter-form .form-control,
-  .contact-form .form-control {
+  .form-control,
+  .form-control {
     box-shadow: var(--gray-color);
     background: var(--box-bg);
     color: var(--dark-color);
@@ -546,8 +546,8 @@ https://templatemo.com/tm-538-digital-trend
     margin: 14px 0;
   }
 
-  .newsletter-form button,
-  .contact-form #submit-button {
+  button,
+  #submit-button {
     background: var(--primary-color);
     border-radius: var(--border-radius-large);
     color: var(--white-color);
