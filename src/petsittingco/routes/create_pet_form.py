@@ -28,7 +28,7 @@ def pet_forms():
     if form.validate_on_submit():
         pet_attr_dict = {} 
    
-        pet_attr_dict = {"pet_name":form.pet_name.data, "pet_type":"", "other_type":form.pet_type, "energetic":form.is_energetic,  "noisy":form.is_noisy, "trained":form.is_trained, "other info":form.other_info} 
+        pet_attr_dict = {"pet_name":form.pet_name.data, "pet_type":"", "other_type":form.pet_type.data, "energetic":form.is_energetic.data,  "noisy":form.is_noisy.data, "trained":form.is_trained.data, "other info":form.other_info.data} 
 
         new_pet = Pet(id=str(uuid.uuid4()), owner_id=current_user.id, name=form.pet_name.data, attributes=str(pet_attr_dict))
         db.session.add(new_pet)
