@@ -93,12 +93,14 @@ class JobInfo(Resource):
                 print("getting owner name")
                 jobinfo['owner_name'] = str(job.owner.first_name)
                 jobinfo['owner_id'] = job.owner_id
-                jobinfo['phone_number'] = job.owner.phone_number
+                jobinfo['owner_number'] = job.owner.phone_number
                 if job.accepted:
-                    sitter_acc = Account.query.get(job.sitter_id)
+                    sitter_acc = job.sitter
                     jobinfo['sitter_name'] = sitter_acc.first_name
+                    jobinfo['sitter_number'] = sitter_acc.phone_number
                 else:
-                    jobinfo['sitter_name'] = str("No Sitter")
+                    jobinfo['sitter_name'] = "No Sitter"
+                    jobinfo['sitter_number'] = "No sitter"
                 print("returning")
                 return jobinfo, 200
         return {"msg":"Bad Job ID","success":False}, 400
