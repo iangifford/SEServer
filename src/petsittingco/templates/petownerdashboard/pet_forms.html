@@ -80,9 +80,9 @@ https://templatemo.com/tm-538-digital-trend
            <form action="/petownerdashboard/pet_forms" method="POST" class="contact-form" data-aos-delay="300" role="form">
           <div class="row">
             <div class="col-lg-6 col-12">
-              {{ form.hidden_tag() }}
-              {{ wtf.form_field(form.pet_name) }}
-              {{ wtf.form_field(form.attributes) }}
+              {{ pet_form.hidden_tag() }}
+              {{ wtf.form_field(pet_form.pet_name) }}
+              {{ wtf.form_field(pet_form.attributes) }}
             </div>
           </div>
           <div class="col-lg-5 mx-auto col-1">
