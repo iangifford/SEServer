@@ -50,7 +50,7 @@ def login():
             if check_password_hash(user.password,str(form.password.data)):
                 login_user(user, remember = form.remember_me.data)
                 return redirect(url_for("buttons.main_dashboard"))
-            return "Bad email+password combo"
+            return "Bad email+password combo " +  user.password + " " + form.password.data
         return "User does not exist."
     return render_template("signin.html", form=form)
 
