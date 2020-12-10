@@ -1,7 +1,7 @@
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask import Flask, send_from_directory, request, Blueprint, render_template, redirect, url_for
 from flask_restful import Resource, Api, reqparse
-from src.petsittingco.database import db, Pet
+from src.petsittingco.database import db, Pet, Account
 import json 
 
 
@@ -25,11 +25,32 @@ def pets():
             pets += '<br> This Pet is Noisy <br>'
         if pet_temp_dict["trained"]:
             pets += '<br> This Pet is Trained<br>'
-        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p>'
+        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p> <br> <form action="../petownerdashboard/delete.html?pet_id=' + pet_info.id + ' method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Delete Pet</button> </div> </div> </form><br>'
 
-    pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br>'
+    pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br> <form action="../petownerdashboard/change_pet.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Modify Pet</button> </div> </div> </form><br>'
     return render_template("petownerdashboard/pets.html", pet_list=pets)
 
+@login_required
+@pet_blueprint.route('/petownerdashboard/delete', methods=['GET'])
+@pet_blueprint.route('/petownerdashboard/delete.html', methods=['GET'])
+def delete_pet(pet_id):
+    message = ""
+    parser = reqparse.RequestParser()
+    parser.add_argument('id',type=str)
+    parser.add_argument('pet_id',type=str)
+
+    args = parser.parse_args()
+    acc = Account.query.get( str(args["id"]) )
+    if acc:
+        pet = Pet.query.get(args["pet_id"])
+        if pet:
+            db.session.delete(pet)
+            db.session.commit()
+            message += "Pet Has Been Deleted."
+        message += "This Pet Could not Be Deleted."
+    
+    return render_template('/petownerdashboard/delete.html', delete_pet_message=message)
+    
 
 @pet_blueprint.route('/petownerdashboard/dashboard.html', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/dashboard', methods=['GET'])
