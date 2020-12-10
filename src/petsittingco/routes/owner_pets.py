@@ -17,7 +17,7 @@ def pets():
     for pet_info in user_pet_array:
         pets += '<p> <br>' + pet_info.name + '<br>' + pet_info.attributes + '<br> </p>'
 
-    pets += '<br> <form action="/petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br>'
+    pets += '<br> <form action="pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br>'
     return render_template("petownerdashboard/pets.html", pet_list=pets)
 
 
