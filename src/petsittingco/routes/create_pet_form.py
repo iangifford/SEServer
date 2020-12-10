@@ -27,7 +27,7 @@ def pet_forms():
         #pet_attributes_string = ""
         pet_attr_dict = {"pet_name":form.pet_name, "pet_type":"", "other_type":form.pet_type, "energetic":form.is_energetic,  "noisy":form.is_noisy, "trained":form.is_trained, "other info":form.other_info} 
 
-        new_pet = Pet(id=str(uuid.uuid4()), owner_id="str(current_user.id)", name=form.pet_name, attributes=str(pet_attr_dict))
+        new_pet = Pet(id=str(uuid.uuid4()), owner_id=int(current_user.id), name=form.pet_name, attributes=str(pet_attr_dict))
         db.session.add(new_pet)
         db.session.commit()
 
