@@ -30,23 +30,34 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8,max=64)])
 
 class AdminModelViewAcc(ModelView):
+    column_searchable_list = ["first_name","last_name","email","address","phone_number"]
+
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
-    column_searchable_list = ["first_name","last_name","email","address","phone_number"]
+
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():
             return redirect(url_for("login"))
 
 class AdminModelViewJob(ModelView):
-    def is_accessible(self):
-        return current_user.is_authenticated and current_user.is_admin
     column_searchable_list = ["location","owner_id","sitter_id"]
 
-class AdminModelViewPet(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
-    column_searchable_list = ["name","owner_id"]
 
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for("login"))
+class AdminModelViewPet(ModelView):
+    column_searchable_list = ["name","owner_id"]
+    
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
+
+    def _handle_view(self, name, **kwargs):
+        if not self.is_accessible():
+            return redirect(url_for("login"))
 @login_manager.user_loader
 def load_user(id):
     return Account.query.get(id)
