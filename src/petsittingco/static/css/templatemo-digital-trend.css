@@ -544,7 +544,7 @@ https://templatemo.com/tm-538-digital-trend
   .newsletter-form .form-control,
   .contact-form .form-control {
     box-shadow: none;
-    background: var(--project-bg);
+    background: var(--gray-color);
     border: 0;
     padding: 1.7em 1.3em;
     margin: 14px 0;
