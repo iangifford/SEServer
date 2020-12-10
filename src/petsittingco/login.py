@@ -29,10 +29,20 @@ class RegisterForm(FlaskForm):
     is_shelter = BooleanField('Animal Shelter?')
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8,max=64)])
 
-class AdminModelView(ModelView):
+class AdminModelViewAcc(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
-    column_searchable_list = ["first_name","last_name","name","location","owner_id","sitter_id"]
+    column_searchable_list = ["first_name","last_name","email","address","phone_number"]
+
+class AdminModelViewJob(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
+    column_searchable_list = ["location","owner_id","sitter_id"]
+
+class AdminModelViewPet(ModelView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
+    column_searchable_list = ["name","owner_id"]
 
 @login_manager.user_loader
 def load_user(id):

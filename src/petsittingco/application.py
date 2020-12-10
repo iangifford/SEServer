@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired, Email, Length
 from flask_bootstrap import Bootstrap
 from werkzeug.routing import BaseConverter
 from src.petsittingco.resources.resource_map import apis
-from src.petsittingco.login import login_manager, login_blueprint, AdminModelView
+from src.petsittingco.login import login_manager, login_blueprint, AdminModelViewAcc, AdminModelViewJob, AdminModelViewPet
 from src.petsittingco.routes.main_dash import button_blueprint
 from src.petsittingco.routes.owner_pets import pet_blueprint
 from src.petsittingco.routes.create_pet_form import pet_form_blueprint
@@ -42,9 +42,9 @@ app.register_blueprint(pet_blueprint)
 app.register_blueprint(pet_form_blueprint)
 #init admin dashboard
 admin = Admin(app)
-admin.add_view(AdminModelView(Account, db.session))
-admin.add_view(AdminModelView(Job, db.session))
-admin.add_view(AdminModelView(Pet, db.session))
+admin.add_view(AdminModelViewAcc(Account, db.session))
+admin.add_view(AdminModelViewJob(Job, db.session))
+admin.add_view(AdminModelViewPet(Pet, db.session))
 
 #custom routing (turns empty url into /)
 class WildcardConverter(BaseConverter):
