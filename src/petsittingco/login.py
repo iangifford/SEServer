@@ -47,7 +47,7 @@ def login():
     if form.validate_on_submit():
         user = Account.query.filter_by(email=str(form.email.data).lower()).first()
         if user:
-            if check_password_hash(user.password,form.password.data):
+            if check_password_hash(user.password,str(form.password.data)):
                 login_user(user, remember = form.remember_me.data)
                 return redirect(url_for("buttons.main_dashboard"))
             return "Bad email+password combo"
