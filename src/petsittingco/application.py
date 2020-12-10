@@ -12,7 +12,7 @@ from src.petsittingco.login import login_manager, login_blueprint, AdminModelVie
 from src.petsittingco.routes.main_dash import button_blueprint
 from src.petsittingco.routes.owner_pets import pet_blueprint
 from src.petsittingco.routes.create_pet_form import pet_form_blueprint
-from src.petsittingco.database import db, Account
+from src.petsittingco.database import db, Account, Job, Pet
 
 #init app
 app  = Flask(__name__, static_url_path='')
@@ -43,6 +43,8 @@ app.register_blueprint(pet_form_blueprint)
 #init admin dashboard
 admin = Admin(app)
 admin.add_view(AdminModelView(Account, db.session))
+admin.add_view(AdminModelView(Job, db.session))
+admin.add_view(AdminModelView(Pet, db.session))
 
 #custom routing (turns empty url into /)
 class WildcardConverter(BaseConverter):
