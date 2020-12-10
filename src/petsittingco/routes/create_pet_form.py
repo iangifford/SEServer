@@ -7,7 +7,7 @@ from src.petsittingco.database import db, Pet
 from wtforms.validators import InputRequired, Length
 import uuid
 
-pet_form_blueprint = Blueprint("pets","__pets__")
+pet_form_blueprint = Blueprint("pet_forms","__pet_forms__")
 
 class RegisterForm(FlaskForm):
     pet_name = StringField('Pet Name', validators=[InputRequired(), Length(min=4,max=64)])
