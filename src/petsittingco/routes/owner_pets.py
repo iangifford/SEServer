@@ -41,12 +41,14 @@ def delete_pet():
     args = parser.parse_args()
 
     pet = Pet.query.get(args["pet_id"])
+    if not pet:
+        message += "This Pet Could not Be Deleted."
+
     if pet:
         if current_user == pet.owner:
             db.session.delete(pet)
             db.session.commit()
             message += "Pet Has Been Deleted."
-    message += "This Pet Could not Be Deleted."
     
     return render_template('/petownerdashboard/delete.html', delete_pet_message=message)
     
