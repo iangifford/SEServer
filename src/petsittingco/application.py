@@ -42,11 +42,11 @@ app.register_blueprint(button_blueprint)
 app.register_blueprint(pet_blueprint)
 app.register_blueprint(pet_form_blueprint)
 #init admin dashboard
-admin = Admin(app, name = 'Admin', url = "admin", endpoint = "admin", template_mode="bootstrap3")
+admin = Admin(app, name = 'Admin', url = "/admin", endpoint = "admin", template_mode="bootstrap3")
 admin.add_view(AdminModelViewAcc(Account, db.session))
 admin.add_view(AdminModelViewJob(Job, db.session))
 admin.add_view(AdminModelViewPet(Pet, db.session))
-shelter = Admin(app, name = "Shelter",url="shelter", endpoint = "shelter",template_mode="bootstrap3",)
+shelter = Admin(app, name = "Shelter",url="/shelter", endpoint = "shelter",template_mode="bootstrap3",)
 
 #custom routing (turns empty url into /)
 class WildcardConverter(BaseConverter):
