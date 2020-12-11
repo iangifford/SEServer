@@ -52,7 +52,7 @@ def pet_sitter_dashboard():
 @sitter_blueprint.route('/petsitterdashboard/acceptedjobs', methods=['GET'])
 @sitter_blueprint.route('/petsitterdashboard/acceptedjobs.html', methods=['GET'])
 def accepted_jobs():
-    jobs = ""
+    jobs = "hi"
     job_array = Job.query.all()
 
     for job in job_array:
