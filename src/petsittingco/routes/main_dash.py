@@ -19,7 +19,7 @@ def main_dashboard():
         all_buttons += '<a href="../petsitterdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Sitter Dashboard</a><br>'
     # Shelter
     if current_user.is_shelter:
-        all_buttons += '<a href="../petshelterdashboard/dashboard.html" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Shelter Dashboard</a><br>'
+        all_buttons += '<a href="../shelter" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Shelter Dashboard</a><br>'
     #Admin
     if current_user.is_admin:
         all_buttons += '<a href="../admin" class="custom-btn btn-bg btn mt-3" data-aos-delay="100">Admin Dashboard</a><br>'
