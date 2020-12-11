@@ -28,7 +28,7 @@ for create_api in apis:
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "hi"
-app.config['FLSAK_ADMIN_SWATCH'] = 'ceruluean'
+app.config['FLASK_ADMIN_SWATCH'] = 'flatly'
 db.app = app
 db.init_app(app)
 
