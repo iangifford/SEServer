@@ -47,7 +47,7 @@ admin.add_view(AdminModelViewAcc(Account, db.session))
 admin.add_view(AdminModelViewJob(Job, db.session))
 admin.add_view(AdminModelViewPet(Pet, db.session))
 shelter = Admin(app, name = "Shelter",url="/shelter", endpoint = "shelter",template_mode="bootstrap3",)
-shelter.add_view(ShelterModelViewAcc(Account, db.session))
+shelter.add_view(ShelterModelViewAcc(Account, db.session, endpoint="shelteraccview"))
 #custom routing (turns empty url into /)
 class WildcardConverter(BaseConverter):
     regex = r'(|/.*?)'

@@ -37,6 +37,7 @@ class ShelterModelViewAcc(ModelView):
     def _handle_view(self, name, **kwargs):
         if not self.is_accessible():
             return redirect(url_for("login"))
+            
 class AdminModelViewAcc(ModelView):
     column_searchable_list = ["first_name","last_name","email","address","phone_number"]
 
