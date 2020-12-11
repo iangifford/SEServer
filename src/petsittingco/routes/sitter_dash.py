@@ -11,13 +11,13 @@ sitter_blueprint = Blueprint("sitter","__sitter__")
 @sitter_blueprint.route('/petsitterdashboard/joblistings', methods=['GET'])
 @sitter_blueprint.route('/petsitterdashboard/joblistings.html', methods=['GET'])
 def jobs():
-    jobs = "hi"
+    jobs = ""
     
     job_array = Job.query.all()
 
     for job in job_array:
         if not job.canceled and not job.accepted:
-            jobs += '<div class="row"><h3 style="text-align: center">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h3><br></p></div><div class="row"><button onclick="document.location=\'../petsitterdashboard/accept.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >Accept Job</button> </div><br>'
+            jobs += '<div class="row"><h3 style="text-align: center">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h3><br></p></div><div class="row"><button onclick="document.location=\'../petsitterdashboard/accept.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >Accept Job</button> </div><br><br><br><br><br>'
 
     return render_template("petsitterdashboard/joblistings.html", job_list=jobs)
 """
