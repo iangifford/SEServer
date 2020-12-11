@@ -33,7 +33,7 @@ def accept():
 
     job = Job.query.get(args["job_id"])
     if not job:
-        message += "This Job could not be deleted."
+        message += "This Job could not be accepted."
     else:
         job.accepted = True
         job.sitter = current_user
@@ -52,11 +52,11 @@ def pet_sitter_dashboard():
 @sitter_blueprint.route('/petsitterdashboard/acceptedjobs', methods=['GET'])
 @sitter_blueprint.route('/petsitterdashboard/acceptedjobs.html', methods=['GET'])
 def accepted_jobs():
-    jobs = "hi"
+    jobs = ""
     job_array = Job.query.all()
 
     for job in job_array:
-        if job.owner.id == current_user.id and not job.canceled:
+        if job.sitter == current_user and not job.canceled:
             jobs += '<div class="row"><h3 style="text-align: center">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h3></div><div class="row"><button onclick="document.location=\'../petsitterdashboard/job.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >View Job Details</button> </div><br>'
 
     return render_template("petsitterdashboard/acceptedjobs.html", job_list=jobs)
