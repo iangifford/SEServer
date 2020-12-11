@@ -44,7 +44,7 @@ def accept():
 
 @login_required
 @sitter_blueprint.route('/petsitterdashboard/job', methods=['GET'])
-@sitter_blueprint.route('/petsitterdashboard/job', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/job.html', methods=['GET'])
 def job():
     parser = reqparse.RequestParser()
     parser.add_argument('job_id',type=str)
