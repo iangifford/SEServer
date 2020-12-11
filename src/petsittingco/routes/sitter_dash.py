@@ -34,7 +34,6 @@ def accept():
     job = Job.query.get(args["job_id"])
     if not job:
         message += "This Job could not be deleted."
-    print("bad pet")
     else:
         job.accepted = True
         job.sitter = current_user
