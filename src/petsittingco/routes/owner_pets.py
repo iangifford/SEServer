@@ -9,6 +9,7 @@ pet_blueprint = Blueprint("pets","__pets__")
 
 @pet_blueprint.route('/petownerdashboard/pets', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/pets.html', methods=['GET'])
+@login_required
 def pets():
     pets = ""
     
@@ -30,9 +31,10 @@ def pets():
     pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br> <form action="../petownerdashboard/change_pet.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Modify Pet</button> </div> </div> </form><br>'
     return render_template("petownerdashboard/pets.html", pet_list=pets)
 
-@login_required
+
 @pet_blueprint.route('/petownerdashboard/delete', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/delete.html', methods=['GET'])
+@login_required
 def delete_pet():
     message = ""
     parser = reqparse.RequestParser()
