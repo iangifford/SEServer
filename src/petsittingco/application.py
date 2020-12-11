@@ -42,7 +42,7 @@ app.register_blueprint(button_blueprint)
 app.register_blueprint(pet_blueprint)
 app.register_blueprint(pet_form_blueprint)
 #init admin dashboard
-admin = Admin(app, name = 'Admin')
+admin = Admin(app, name = 'Admin', template_mode="bootstrap3")
 admin.add_view(AdminModelViewAcc(Account, db.session))
 admin.add_view(AdminModelViewJob(Job, db.session))
 admin.add_view(AdminModelViewPet(Pet, db.session))
