@@ -28,6 +28,7 @@ for create_api in apis:
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "hi"
+app.config['FLSAK_ADMIN_SWATCH'] = 'ceruluean'
 db.app = app
 db.init_app(app)
 
@@ -41,7 +42,7 @@ app.register_blueprint(button_blueprint)
 app.register_blueprint(pet_blueprint)
 app.register_blueprint(pet_form_blueprint)
 #init admin dashboard
-admin = Admin(app)
+admin = Admin(app, name = 'Admin')
 admin.add_view(AdminModelViewAcc(Account, db.session))
 admin.add_view(AdminModelViewJob(Job, db.session))
 admin.add_view(AdminModelViewPet(Pet, db.session))
