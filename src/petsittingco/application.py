@@ -46,6 +46,7 @@ admin = Admin(app, name = 'Admin', template_mode="bootstrap3")
 admin.add_view(AdminModelViewAcc(Account, db.session))
 admin.add_view(AdminModelViewJob(Job, db.session))
 admin.add_view(AdminModelViewPet(Pet, db.session))
+shelter = Admin(app, name = "Shelter",url="shelter" template_mode="bootstrap3")
 
 #custom routing (turns empty url into /)
 class WildcardConverter(BaseConverter):
