@@ -1,36 +1,28 @@
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask import Flask, send_from_directory, request, Blueprint, render_template, redirect, url_for
 from flask_restful import Resource, Api, reqparse
-from src.petsittingco.database import db, Pet, Account
+from src.petsittingco.database import db, Pet, Account, Job
 import json 
 
 
 sitter_blueprint = Blueprint("sitter","__sitter__")
 
 @login_required
-@pet_blueprint.route('/petsitterdashboard/pets', methods=['GET'])
-@pet_blueprint.route('/petsitterdashboard/pets.html', methods=['GET'])
-def pets():
-    pets = ""
+@pet_blueprint.route('/petsitterdashboard/joblistings', methods=['GET'])
+@pet_blueprint.route('/petsitterdashboard/joblistings.html', methods=['GET'])
+def jobs():
+    jobs = ""
     
-    user_pet_array = current_user.pets
-    if not user_pet_array:
-        pets += '<p> You Have No Pets Yet. Add Some Pets! </p>'
+    job_array = Job.query.all()
+    if not job_array:
+        jobs += '<p> No jobs available in your area.</p>'
 
-    for pet_info in user_pet_array:
-        pet_temp_dict = json.loads(pet_info.attributes)
-        pets += '<p> <br> Pet Name: ' + pet_temp_dict["pet_name"] + '<br> Pet Type: ' + pet_temp_dict["other_type"] + '<br> Attributes: '
-        if pet_temp_dict["energetic"]:
-            pets += '<br> This Pet is Energetic <br>'
-        if pet_temp_dict["noisy"]:
-            pets += '<br> This Pet is Noisy <br>'
-        if pet_temp_dict["trained"]:
-            pets += '<br> This Pet is Trained<br>'
-        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p><button onclick="document.location=\'../petownerdashboard/delete.html?pet_id=' + pet_info.id + '\'"  id="submit-button" class="form-control" data-aos-delay="300" >Delete Pet</button> <br>'
+    for job in job_array:
+        if not job.canceled and not job.accepted:
+            jobs += '<div class="row">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '<br></p><button onclick="document.location=\'../petsitterdashboard/accept.html?job_id=' + job.id + '\'"  id="submit-button" class="form-control" data-aos-delay="300" >Accept Job</button> </div><br>'
 
-    pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br> <form action="../petownerdashboard/change_pet.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Modify Pet</button> </div> </div> </form><br>'
-    return render_template("petownerdashboard/pets.html", pet_list=pets)
-
+    return render_template("petsitterdashboard/joblistings.html", job_list=jobs)
+"""
 @login_required
 @pet_blueprint.route('/petownerdashboard/delete', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/delete.html', methods=['GET'])
@@ -53,10 +45,10 @@ def delete_pet():
         print("Bad owner")
     
     return render_template('/petownerdashboard/delete.html', delete_pet_message=message)
-    
+"""
 
-@pet_blueprint.route('/petownerdashboard/dashboard.html', methods=['GET'])
-@pet_blueprint.route('/petownerdashboard/dashboard', methods=['GET'])
-def pet_owner_dashboard():
-    return render_template("petownerdashboard/dashboard.html")
+@pet_blueprint.route('/petsitterdashboard/dashboard.html', methods=['GET'])
+@pet_blueprint.route('/petsitterdashboard/dashboard', methods=['GET'])
+def pet_sitter_dashboard():
+    return render_template("petsitterdashboard/dashboard.html")
 
