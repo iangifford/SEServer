@@ -22,8 +22,8 @@ def jobs():
     return render_template("petsitterdashboard/joblistings.html", job_list=jobs)
 
 @login_required
-@sitter_blueprint.route('/petownerdashboard/accept', methods=['GET'])
-@sitter_blueprint.route('/petownerdashboard/accept.html', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/accept', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/accept.html', methods=['GET'])
 def accept():
     message = ""
     parser = reqparse.RequestParser()
