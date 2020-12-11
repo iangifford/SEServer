@@ -20,30 +20,30 @@ def jobs():
             jobs += '<div class="row"><h3 style="text-align: center">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h3></div><div class="row"><button onclick="document.location=\'../petsitterdashboard/accept.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >Accept Job</button> </div><br>'
 
     return render_template("petsitterdashboard/joblistings.html", job_list=jobs)
-"""
+
 @login_required
-@pet_blueprint.route('/petownerdashboard/delete', methods=['GET'])
-@pet_blueprint.route('/petownerdashboard/delete.html', methods=['GET'])
-def delete_pet():
+@sitter_blueprint.route('/petownerdashboard/accept', methods=['GET'])
+@sitter_blueprint.route('/petownerdashboard/accept.html', methods=['GET'])
+def accept():
     message = ""
     parser = reqparse.RequestParser()
-    parser.add_argument('pet_id',type=str)
+    parser.add_argument('job_id',type=str)
 
     args = parser.parse_args()
 
-    pet = Pet.query.get(args["pet_id"])
-    if not pet:
-        message += "This Pet Could not Be Deleted."
+    job = Job.query.get(args["job_id"])
+    if not job:
+        message += "This Job could not be deleted."
     print("bad pet")
-    if pet:
-        if current_user == pet.owner:
-            db.session.delete(pet)
-            db.session.commit()
-            message += "Pet Has Been Deleted."
+    else:
+        job.accepted = True
+        job.sitter = current_user
+        db.session.commit()
+        message += "Job successfully accepted."
         print("Bad owner")
     
-    return render_template('/petownerdashboard/delete.html', delete_pet_message=message)
-"""
+    return render_template('/petsitterdashboard/accept.html', job_accept_message=message)
+
 
 @sitter_blueprint.route('/petsitterdashboard/dashboard.html', methods=['GET'])
 @sitter_blueprint.route('/petsitterdashboard/dashboard', methods=['GET'])
