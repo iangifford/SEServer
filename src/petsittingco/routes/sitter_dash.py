@@ -39,7 +39,6 @@ def accept():
         job.sitter = current_user
         db.session.commit()
         message += "Job successfully accepted."
-        print("Bad owner")
     
     return render_template('/petsitterdashboard/accept.html', job_accept_message=message)
 
@@ -49,3 +48,15 @@ def accept():
 def pet_sitter_dashboard():
     return render_template("petsitterdashboard/dashboard.html")
 
+@login_required
+@sitter_blueprint.route('/petsitterdashboard/acceptedjobs', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/acceptedjobs.html', methods=['GET'])
+def accepted_jobs():
+    jobs = ""
+    job_array = Job.query.all()
+
+    for job in job_array:
+        if job.owner == current_user and not job.canceled:
+            jobs += '<div class="row"><h3 style="text-align: center">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h3></div><div class="row"><button onclick="document.location=\'../petsitterdashboard/job.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >View Job Details</button> </div><br>'
+
+    return render_template("petsitterdashboard/joblistings.html", job_list=jobs)

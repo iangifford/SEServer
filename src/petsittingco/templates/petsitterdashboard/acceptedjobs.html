@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>PetSitting Co.</title>
+  <title>Job Listings</title>
   <!--
 
 DIGITAL TREND
@@ -35,7 +35,7 @@ https://templatemo.com/tm-538-digital-trend
   <nav class="navbar navbar-expand-lg position-absolute">
     <div class="container">
       <a class="navbar-brand" href="../index.html">
-        Pet Sitter Dashboard
+        Job Listings
       </a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -46,7 +46,7 @@ https://templatemo.com/tm-538-digital-trend
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="../main_dashboard.html" class="nav-link">Back to Main Dashboard</a>
+            <a href="dashboard.html" class="nav-link">Back to Dashboard</a>
           </li>
           <li class="nav-item">
             <a href="../contact.html" class="nav-link">Contact</a>
@@ -63,49 +63,15 @@ https://templatemo.com/tm-538-digital-trend
   </nav>
 
 
-  <!-- Dashboard Buttons -->
-  <section class="contact section-padding">
-    <div class="container">
-      <div class="row">
-
-        <div class="col-lg-8 mx-auto col-md-10 col-12">
-
-          <!-- Follow https://templatemo.com/contact page to setup your own contact form -->
+  <!-- Job Stuff -->
+     <section class="contact section-padding">
+          <div class="container">
 
 
-          <form action="joblistings.html" method="get" class="contact-form" data-aos-delay="300" role="form">
-            <div class="col-lg-5 mx-auto col-1">
-              <div class="row">
-                <button class="form-control" id="submit-button">Job Listings</button>
-              </div>
-            </div>
-          </form>
+            {{ job_list|safe }}
 
-          <form action="acceptedjobs.html" method="get" class="contact-form" data-aos-delay="300" role="form">
-            <div class="col-lg-5 mx-auto col-1">
-              <div class="row">
-                <button class="form-control" id="submit-button">Accepted Jobs</button>
-              </div>
-            </div>
-          </form>
-
-
-          <form action="account.html" method="get" class="contact-form" data-aos="fade-up" data-aos-delay="300"
-            role="form">
-            <div class="row">
-              <div class="col-lg-5 mx-auto col-1">
-                <button class="form-control" id="submit-button">Account</button>
-              </div>
-            </div>
-          </form>
-
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
+          </div>
+     </section>
 
 
   <footer class="site-footer">
