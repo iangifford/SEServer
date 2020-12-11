@@ -5,9 +5,10 @@ from flask_restful import Resource, Api, reqparse
 
 button_blueprint = Blueprint("buttons","__buttons__")
 
-@login_required
+
 @button_blueprint.route('/main_dashboard', methods=['GET'])
 @button_blueprint.route('/main_dashboard.html', methods=['GET'])
+@login_required
 def main_dashboard():
     all_buttons = ""
     # Owner
