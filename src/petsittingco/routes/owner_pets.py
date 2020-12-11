@@ -54,7 +54,6 @@ def delete_pet():
         print("Bad owner")
     
     return render_template('/petownerdashboard/delete.html', delete_pet_message=message)
-    
 
 @pet_blueprint.route('/petownerdashboard/dashboard.html', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/dashboard', methods=['GET'])

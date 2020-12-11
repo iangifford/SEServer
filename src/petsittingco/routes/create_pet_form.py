@@ -37,3 +37,32 @@ def pet_forms():
 
         return redirect('/petownerdashboard/pets.html')
     return render_template('/petownerdashboard/pet_forms.html', pet_form=form )
+
+@pet_form_blueprint.route('/petownerdashboard/change_pet', methods=['GET', 'POST'])
+@pet_form_blueprint.route('/petownerdashboard/change_pet.html', methods=['GET', 'POST'])
+@login_required
+def modify_pet():
+    message = ""
+    parser = reqparse.RequestParser()
+    parser.add_argument('pet_id',type=str)
+    parser.add_argument('name',type=str)
+    parser.add_argument('attributes', type=str)
+
+    args = parser.parse_args()
+
+    pet = Pet.query.get(args["pet_id"])
+    if not pet:
+        message += "This Pet Could not Be Modified."
+    print("bad pet")
+    form = RegisterForm()
+    pet_attr_dict = {} 
+    if form.validate_on_submit():
+        if pet:
+            if current_user == pet.owner:
+                form.pet_name.data = args["name"]
+                pet_attr_dict = {"pet_name":form.pet_name.data, "pet_type":"", "other_type":form.pet_type.data, "energetic":form.is_energetic.data,  "noisy":form.is_noisy.data, "trained":form.is_trained.data, "other_info":form.other_info.data}
+                db.session.commit()
+                message += "Pet Has Been Modified."
+        print("Bad owner")
+
+    return render_template('/petownerdashboard/change_pet.html', modify_pet_message=message)
