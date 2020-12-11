@@ -59,7 +59,7 @@ def job():
         petstring = ""
         for pet in pets:
             petstring +=pet.name + "<br>"
-        job_details = '<div class="row"><p>Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '</p><br><p>Pets: <br>' + petstring + '</p></div>'
+        job_details = '<div class="row"><p>Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '<br>Job details: ' + job.details + '</p><br><p>Pets: <br>' + petstring + '</p></div>'
         
         
         
