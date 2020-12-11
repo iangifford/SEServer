@@ -11,11 +11,9 @@ sitter_blueprint = Blueprint("sitter","__sitter__")
 @sitter_blueprint.route('/petsitterdashboard/joblistings', methods=['GET'])
 @sitter_blueprint.route('/petsitterdashboard/joblistings.html', methods=['GET'])
 def jobs():
-    jobs = ""
+    jobs = "hi"
     
     job_array = Job.query.all()
-    if not job_array:
-        jobs += '<p> No jobs available in your area.</p>'
 
     for job in job_array:
         if not job.canceled and not job.accepted:
