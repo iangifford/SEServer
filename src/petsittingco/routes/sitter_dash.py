@@ -59,4 +59,4 @@ def accepted_jobs():
         if job.owner.id == current_user.id and not job.canceled:
             jobs += '<div class="row"><h3 style="text-align: center">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h3></div><div class="row"><button onclick="document.location=\'../petsitterdashboard/job.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >View Job Details</button> </div><br>'
 
-    return render_template("petsitterdashboard/joblistings.html", job_list=jobs)
+    return render_template("petsitterdashboard/acceptedjobs.html", job_list=jobs)
