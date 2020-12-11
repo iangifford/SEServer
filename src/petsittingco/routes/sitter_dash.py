@@ -42,9 +42,35 @@ def accept():
     
     return render_template('/petsitterdashboard/accept.html', job_accept_message=message)
 
+@login_required
+@sitter_blueprint.route('/petsitterdashboard/job', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/job', methods=['GET'])
+def job():
+    parser = reqparse.RequestParser()
+    parser.add_argument('job_id',type=str)
+
+    args = parser.parse_args()
+
+    job = Job.query.get(args["job_id"])
+    if not job:
+        job_details = "This Job could not be found."
+    else:
+        pets = job.owner.pets
+        petstring = ""
+        for pet in petstring:
+            petstring +='<p style="text-indent: 40px">' + pet.name + '</p>'
+        job_details = '<div class="row">Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '<br>Pets: <br>' + petstring + '</div>'
+        
+        
+        
+        
+        
+    
+    return render_template('/petsitterdashboard/job.html', job=job_details)
 
 @sitter_blueprint.route('/petsitterdashboard/dashboard.html', methods=['GET'])
 @sitter_blueprint.route('/petsitterdashboard/dashboard', methods=['GET'])
+@login_required
 def pet_sitter_dashboard():
     return render_template("petsitterdashboard/dashboard.html")
 
