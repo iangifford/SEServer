@@ -17,7 +17,7 @@ def jobs():
 
     for job in job_array:
         if not job.canceled and not job.accepted:
-            jobs += '<div class="row">Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '<br></p><button onclick="document.location=\'../petsitterdashboard/accept.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3 form-control" data-aos-delay="300" >Accept Job</button> </div><br>'
+            jobs += '<div class="row" style="border:1px solid black"><h2>Job for ' + job.owner.first_name + ' on ' + job.start_datetime +  '</h2><br></p><button onclick="document.location=\'../petsitterdashboard/accept.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3 form-control" data-aos-delay="300" >Accept Job</button> </div><br>'
 
     return render_template("petsitterdashboard/joblistings.html", job_list=jobs)
 """
