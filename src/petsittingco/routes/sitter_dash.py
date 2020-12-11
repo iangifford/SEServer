@@ -58,8 +58,8 @@ def job():
         pets = job.owner.pets
         petstring = ""
         for pet in pets:
-            petstring +='<p style="text-indent: 40px">' + pet.name + '</p>'
-        job_details = '<div class="row">Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '<br>Pets: <br>' + petstring + '</div>'
+            petstring +=pet.name + "<br>"
+        job_details = '<div class="row"><p>Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '</p><br><p>Pets: <br>' + petstring + '</p></div>'
         
         
         
