@@ -57,7 +57,7 @@ def job():
     else:
         pets = job.owner.pets
         petstring = ""
-        for pet in petstring:
+        for pet in pets:
             petstring +='<p style="text-indent: 40px">' + pet.name + '</p>'
         job_details = '<div class="row">Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '<br>Pets: <br>' + petstring + '</div>'
         
