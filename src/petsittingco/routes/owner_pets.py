@@ -6,10 +6,9 @@ import json
 
 
 pet_blueprint = Blueprint("pets","__pets__")
-
+@login_required
 @pet_blueprint.route('/petownerdashboard/pets', methods=['GET'])
 @pet_blueprint.route('/petownerdashboard/pets.html', methods=['GET'])
-@login_required
 def pets():
     pets = ""
     
