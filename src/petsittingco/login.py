@@ -31,6 +31,10 @@ class RegisterForm(FlaskForm):
 class ShelterModelViewAcc(ModelView):
     column_searchable_list = ["first_name","last_name","email","address","phone_number"]
     column_exclude_list = ["password","is_owner","is_shelter","is_admin"]
+    can_edit = False
+    can_delete = False
+    can_create = False
+    
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_shelter
 
