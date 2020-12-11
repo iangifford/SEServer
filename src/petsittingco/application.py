@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired, Email, Length
 from flask_bootstrap import Bootstrap
 from werkzeug.routing import BaseConverter
 from src.petsittingco.resources.resource_map import apis
-from src.petsittingco.login import login_manager, login_blueprint, AdminModelViewAcc, AdminModelViewJob, AdminModelViewPet
+from src.petsittingco.login import login_manager, login_blueprint, AdminModelViewAcc, AdminModelViewJob, AdminModelViewPet, ShelterModelViewAcc
 from src.petsittingco.routes.main_dash import button_blueprint
 from src.petsittingco.routes.owner_pets import pet_blueprint
 from src.petsittingco.routes.create_pet_form import pet_form_blueprint
@@ -47,7 +47,7 @@ admin.add_view(AdminModelViewAcc(Account, db.session))
 admin.add_view(AdminModelViewJob(Job, db.session))
 admin.add_view(AdminModelViewPet(Pet, db.session))
 shelter = Admin(app, name = "Shelter",url="/shelter", endpoint = "shelter",template_mode="bootstrap3",)
-
+shelter.add_view(ShelterModelViewAcc(Account, db.session))
 #custom routing (turns empty url into /)
 class WildcardConverter(BaseConverter):
     regex = r'(|/.*?)'
