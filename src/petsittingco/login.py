@@ -106,6 +106,7 @@ def signup():
 
 
 @login_blueprint.route('/logout')
+@login_blueprint.route('/logout.html')
 @login_required
 def logout():
     logout_user()
