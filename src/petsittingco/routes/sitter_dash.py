@@ -8,8 +8,8 @@ import json
 sitter_blueprint = Blueprint("sitter","__sitter__")
 
 @login_required
-@pet_blueprint.route('/petsitterdashboard/joblistings', methods=['GET'])
-@pet_blueprint.route('/petsitterdashboard/joblistings.html', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/joblistings', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/joblistings.html', methods=['GET'])
 def jobs():
     jobs = ""
     
@@ -47,8 +47,8 @@ def delete_pet():
     return render_template('/petownerdashboard/delete.html', delete_pet_message=message)
 """
 
-@pet_blueprint.route('/petsitterdashboard/dashboard.html', methods=['GET'])
-@pet_blueprint.route('/petsitterdashboard/dashboard', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/dashboard.html', methods=['GET'])
+@sitter_blueprint.route('/petsitterdashboard/dashboard', methods=['GET'])
 def pet_sitter_dashboard():
     return render_template("petsitterdashboard/dashboard.html")
 
