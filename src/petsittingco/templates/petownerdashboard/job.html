@@ -1,10 +1,9 @@
-{% import "bootstrap/wtf.html" as wtf %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <title>Pet Forms</title>
+  <title>Job Listings</title>
   <!--
 
 DIGITAL TREND
@@ -36,7 +35,7 @@ https://templatemo.com/tm-538-digital-trend
   <nav class="navbar navbar-expand-lg position-absolute">
     <div class="container">
       <a class="navbar-brand" href="../index.html">
-        PetSitting Co.
+        Job Listings
       </a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -50,7 +49,7 @@ https://templatemo.com/tm-538-digital-trend
             <a href="dashboard.html" class="nav-link">Back to Dashboard</a>
           </li>
           <li class="nav-item">
-          <a href="../contact.html" class="nav-link">Contact</a>
+            <a href="../contact.html" class="nav-link">Contact</a>
           </li>
           <li class="nav-item">
             <a href="/logout.html" class="nav-link active contact">Log Out</a>
@@ -61,48 +60,15 @@ https://templatemo.com/tm-538-digital-trend
   </nav>
 
 
-  <!-- CONTACT -->
-  <section class="contact section-padding">
-    <div class="container">
-      <div class="row">
+  <!-- Job Stuff -->
+     <section class="contact section-padding">
+          <div class="container">
 
-        <div class="col-lg-8 mx-auto col-md-10 col-12">
 
-          <!-- Follow https://templatemo.com/contact page to setup your own contact form -->
-
-          <p> Create a Job Here! </p> 
-          
-          <br>
-
-           <form action="/petownerdashboard/pet_forms" method="POST" class="contact-form" data-aos-delay="300" role="form">
-          <div class="row">
-            <div class="col-lg-6 col-12">
-              {{ job_form.hidden_tag() }}
-              {{ wtf.form_field(job_form.loc) }}
-              {{ wtf.form_field(job_form.is_at_owner) }}
-              {{ wtf.form_field(job_form.start_datetime) }}
-              {{ wtf.form_field(job_form.end_datetime) }}
-              {{ wtf.form_field(job_form.details) }}
-              
-            </div>
+            {{ job|safe }}
+            <button onclick="window.history.back();"  id="submit-button" class="form-control" data-aos-delay="300" >Back</button>
           </div>
-          <div class="col-lg-5 mx-auto col-1">
-            <div class="row">
-              <button class="form-control" id="submit-button">Create Job</button>
-            </div>
-          </div>
-
-        </form>
-
-
-  
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
+     </section>
 
 
   <footer class="site-footer">
