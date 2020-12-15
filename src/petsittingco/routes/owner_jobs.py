@@ -69,7 +69,7 @@ def job_forms():
 
     if form.validate_on_submit():
         
-        new_job = job(id=str(uuid.uuid4()), owner_id=current_user.id, location = form.loc, is_at_owner = form.is_at_owner, lat = 0, lon = 0, start_datetime = form.start_datetime, end_datetime = form.end_datetime, details = form.details)
+        new_job = Job(id=str(uuid.uuid4()), owner_id=current_user.id, location = form.loc, is_at_owner = form.is_at_owner, lat = 0, lon = 0, start_datetime = form.start_datetime, end_datetime = form.end_datetime, details = form.details)
         db.session.add(new_job)
         db.session.commit()
 
