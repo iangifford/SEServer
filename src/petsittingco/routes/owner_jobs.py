@@ -55,7 +55,7 @@ def job():
 
 class RegisterForm(FlaskForm):
     loc = StringField('Location', validators = [InputRequired()])
-    is_at_owner = BooleanField("At your place?", validators = [InputRequired()])
+    is_at_owner = BooleanField("At your place?", validators = [])
     start_datetime = StringField("Start Date + Time (MM/DD/YYYY HH:MM)", validators = [InputRequired()])
     end_datetime = StringField("End Date + Time (MM/DD/YYYY HH:MM)", validators = [InputRequired()])
     details = StringField("Extra Details?")
