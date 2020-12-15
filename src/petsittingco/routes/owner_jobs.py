@@ -13,6 +13,8 @@ owner_jobs_blueprint = Blueprint("owner_jobs","__owner_jobs__")
 
 @owner_jobs_blueprint.route('/petownerdashboard/joblistings', methods=['GET'])
 @owner_jobs_blueprint.route('/petownerdashboard/joblistings.html', methods=['GET'])
+@owner_jobs_blueprint.route('/petownerdashboard/job', methods=['GET'])
+@owner_jobs_blueprint.route('/petownerdashboard/jobs.html', methods=['GET'])
 @login_required
 def jobs():
     jobs = ""
