@@ -76,7 +76,7 @@ https://templatemo.com/tm-538-digital-trend
            <form action="/petownerdashboard/change_pet" method="POST" class="contact-form" data-aos-delay="300" role="form">
           <div class="row">
             <div class="col-lg-6 col-12">
-              {{ pet_form.hidden_tag() }}
+              {{ change_pet_form.hidden_tag() }}
               {{ wtf.form_field(change_pet_form.pet_name) }}
               {{ wtf.form_field(change_pet_form.pet_type) }}
               {{ wtf.form_field(change_pet_form.is_energetic) }}
