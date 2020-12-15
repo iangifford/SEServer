@@ -30,8 +30,8 @@ def jobs():
     return render_template("petownerdashboard/joblistings.html", job_list=jobs)
 
 @login_required
-@sitter_blueprint.route('/petownerdashboard/job', methods=['GET'])
-@sitter_blueprint.route('/petownerdashboard/job.html', methods=['GET'])
+@owner_jobs_blueprint.route('/petownerdashboard/job', methods=['GET'])
+@owner_jobs_blueprint.route('/petownerdashboard/job.html', methods=['GET'])
 def job():
     parser = reqparse.RequestParser()
     parser.add_argument('job_id',type=str)
@@ -62,8 +62,8 @@ class RegisterForm(FlaskForm):
 
     
 @login_required
-@pet_form_blueprint.route('/petownerdashboard/job_forms', methods=['GET', 'POST'])
-@pet_form_blueprint.route('/petownerdashboard/job_forms.html', methods=['GET', 'POST'])
+@owner_jobs_blueprint.route('/petownerdashboard/job_forms', methods=['GET', 'POST'])
+@owner_jobs_blueprint.route('/petownerdashboard/job_forms.html', methods=['GET', 'POST'])
 def job_forms():
     form = RegisterForm()
 
