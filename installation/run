@@ -1,2 +1,2 @@
-export FLASK_APP=src/petsittingco/application.py
+export FLASK_APP=../src/petsittingco/application.py
 flask run
