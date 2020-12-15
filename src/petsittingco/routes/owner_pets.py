@@ -26,9 +26,9 @@ def pets():
             pets += '<br> This Pet is Noisy <br>'
         if pet_temp_dict["trained"]:
             pets += '<br> This Pet is Trained<br>'
-        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p><button onclick="document.location=\'../petownerdashboard/delete.html?pet_id=' + pet_info.id + '\'"  id="submit-button" class="form-control" data-aos-delay="300" >Delete Pet</button> <br>'
+        pets += '<br> Other Info: ' + pet_temp_dict["other_info"] + '<br></p><button onclick="document.location=\'../petownerdashboard/delete.html?pet_id=' + pet_info.id + '\'"  id="submit-button" class="form-control" data-aos-delay="300" >Delete Pet</button> <br> <button onclick="document.location=\'../petownerdashboard/change_pet.html?pet_id=' + pet_info.id + '\'"  id="submit-button" class="form-control" data-aos-delay="300" >Modify Pet</button> <br>'
 
-    pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br> <form action="../petownerdashboard/change_pet.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Modify Pet</button> </div> </div> </form><br>'
+    pets += '<br> <form action="../petownerdashboard/pet_forms.html" method="get" class="contact-form" data-aos-delay="300" role="form"> <div class="col-lg-5 mx-auto col-1"> <div class="row"> <button class="form-control" id="submit-button" >Create Pet</button> </div> </div> </form> <br>'
     return render_template("petownerdashboard/pets.html", pet_list=pets)
 
 

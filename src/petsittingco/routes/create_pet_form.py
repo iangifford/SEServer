@@ -42,33 +42,32 @@ def pet_forms():
 @pet_form_blueprint.route('/petownerdashboard/change_pet.html', methods=['GET', 'POST'])
 @login_required
 def modify_pet():
-    message = ""
     parser = reqparse.RequestParser()
     parser.add_argument('pet_id',type=str)
-    parser.add_argument('name',type=str)
-    parser.add_argument('attributes', type=str)
 
     args = parser.parse_args()
 
     pet = Pet.query.get(args["pet_id"])
     if not pet:
-        message += "This Pet Could not Be Modified."
         print("Bad Pet")
+        return redirect('/petownerdashboard/pets.html')
 
-    form = RegisterForm()
+    pet_temp_dict = json.loads(pet.attributes)
+
+    form = RegisterForm(pet_name=pet.name, pet_type=pet_temp_dict["other_type"], is_energetic=pet_temp_dict["energetic"], is_noisy=pet_temp_dict["noisy"], is_trained=pet_temp_dict["trained"], other_info=pet_temp_dict["other_info"])
     pet_attr_dict = {} 
     
     if form.validate_on_submit():
         if pet:
             if current_user == pet.owner:
-                form.pet_name.data = args["name"]
                 pet_attr_dict = {"pet_name":form.pet_name.data, "pet_type":"", "other_type":form.pet_type.data, "energetic":form.is_energetic.data,  "noisy":form.is_noisy.data, "trained":form.is_trained.data, "other_info":form.other_info.data}
                 
                 pet.attributes = json.dumps(pet_attr_dict)
                 pet.name = form.pet_name.data 
 
                 db.session.commit()
-                message += "Pet Has Been Modified."
                 return redirect('/petownerdashboard/pets.html')
             print("Bad Owner")
+            return redirect('/petownerdashboard/pets.html')
+
     return render_template('/petownerdashboard/change_pet.html', change_pet_form=form)
