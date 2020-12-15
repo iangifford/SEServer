@@ -71,4 +71,4 @@ def modify_pet():
                 message += "Pet Has Been Modified."
                 return redirect('/petownerdashboard/pets.html')
             print("Bad Owner")
-    return render_template('/petownerdashboard/change_pet.html', modify_pet_message=message)
+    return render_template('/petownerdashboard/change_pet.html', change_pet_form=form)
