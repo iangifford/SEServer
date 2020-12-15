@@ -53,16 +53,22 @@ def modify_pet():
     pet = Pet.query.get(args["pet_id"])
     if not pet:
         message += "This Pet Could not Be Modified."
-    print("bad pet")
+        print("Bad Pet")
+
     form = RegisterForm()
     pet_attr_dict = {} 
+    
     if form.validate_on_submit():
         if pet:
             if current_user == pet.owner:
                 form.pet_name.data = args["name"]
                 pet_attr_dict = {"pet_name":form.pet_name.data, "pet_type":"", "other_type":form.pet_type.data, "energetic":form.is_energetic.data,  "noisy":form.is_noisy.data, "trained":form.is_trained.data, "other_info":form.other_info.data}
+                
+                pet.attributes = json.dumps(pet_attr_dict)
+                pet.name = form.pet_name.data 
+
                 db.session.commit()
                 message += "Pet Has Been Modified."
-        print("Bad owner")
-
+                return redirect('/petownerdashboard/pets.html')
+            print("Bad Owner")
     return render_template('/petownerdashboard/change_pet.html', modify_pet_message=message)
