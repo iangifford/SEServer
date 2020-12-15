@@ -74,7 +74,7 @@ https://templatemo.com/tm-538-digital-trend
           
           <br>
 
-           <form action="/petownerdashboard/change_pet" method="POST" class="contact-form" data-aos-delay="300" role="form">
+          <form action="/petownerdashboard/change_pet" method="POST" class="contact-form" data-aos-delay="300" role="form">
           <div class="row">
             <div class="col-lg-6 col-12">
               {{ change_pet_form.hidden_tag() }}
@@ -84,6 +84,9 @@ https://templatemo.com/tm-538-digital-trend
               {{ wtf.form_field(change_pet_form.is_noisy) }}
               {{ wtf.form_field(change_pet_form.is_trained) }}
               {{ wtf.form_field(change_pet_form.other_info) }}
+
+              <input type="hidden" id="pet_id" name="pet_id" value="{{ pet_id }}">
+
             </div>
           </div>
           <div class="col-lg-5 mx-auto col-1">

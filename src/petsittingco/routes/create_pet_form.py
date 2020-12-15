@@ -70,4 +70,4 @@ def modify_pet():
             print("Bad Owner")
             return redirect('/petownerdashboard/pets.html')
 
-    return render_template('/petownerdashboard/change_pet.html', change_pet_form=form)
+    return render_template('/petownerdashboard/change_pet.html', change_pet_form=form, pet_id=args["pet_id"])
