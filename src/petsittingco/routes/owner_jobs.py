@@ -30,8 +30,8 @@ def jobs():
     return render_template("petownerdashboard/joblistings.html", job_list=jobs)
 
 @login_required
-@owner_jobs_blueprint.route('/petownerdashboard/createjob', methods=['GET'])
-@owner_jobs_blueprint.route('/petownerdashboard/createjob.html', methods=['GET'])
+@owner_jobs_blueprint.route('/petownerdashboard/job', methods=['GET'])
+@owner_jobs_blueprint.route('/petownerdashboard/job.html', methods=['GET'])
 def job():
     parser = reqparse.RequestParser()
     parser.add_argument('job_id',type=str)
@@ -51,7 +51,7 @@ def job():
         else:
             sitter_name = "No Sitter"
         job_details = '<div class="row"><p>Owner Name: ' + job.owner.first_name + '<br>Start date and time: '+job.start_datetime + '<br>End date and time: ' + job.end_datetime + '<br>Sitter: ' + sitter_name + '<br>Job details: ' + job.details + '</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br><p>Pets: <br>' + petstring + '</p></div>'
-    return render_template('/petownerdashboard/createjob.html', job=job_details)
+    return render_template('/petownerdashboard/job.html', job=job_details)
 
 class RegisterForm(FlaskForm):
     loc = StringField('Location', validators = [InputRequired()])
@@ -62,8 +62,8 @@ class RegisterForm(FlaskForm):
 
     
 @login_required
-@owner_jobs_blueprint.route('/petownerdashboard/job_forms', methods=['GET', 'POST'])
-@owner_jobs_blueprint.route('/petownerdashboard/job_forms.html', methods=['GET', 'POST'])
+@owner_jobs_blueprint.route('/petownerdashboard/createjob', methods=['GET', 'POST'])
+@owner_jobs_blueprint.route('/petownerdashboard/createjob.html', methods=['GET', 'POST'])
 def job_forms():
     form = RegisterForm()
 
