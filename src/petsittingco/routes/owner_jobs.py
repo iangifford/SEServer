@@ -27,7 +27,7 @@ def jobs():
                 sitter_name = "Job sat by " + job.sitter.first_name
             else:
                 sitter_name = 'Job with no sitter'
-            jobs += '<div class="row"><h3 style="text-align: center">Job sat by ' + job.sitter.first_name + ' on ' + job.start_datetime +  '</h3></div><div class="row"><button onclick="document.location=\'../petownerdashboard/job.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >View Job</button> </div><br>'
+            jobs += '<div class="row"><h3 style="text-align: center">Job sat by ' + sitter_name + ' on ' + job.start_datetime +  '</h3></div><div class="row"><button onclick="document.location=\'../petownerdashboard/job.html?job_id=' + job.id + '\'"  id="submit-button" class="custom-btn btn-bg btn mt-3" data-aos-delay="300" >View Job</button> </div><br>'
 
     return render_template("petownerdashboard/joblistings.html", job_list=jobs)
 
